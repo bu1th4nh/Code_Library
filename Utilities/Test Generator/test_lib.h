@@ -95,7 +95,7 @@ string rand_str(int n, int CASE_SETTINGS = 0, int NUMBER_SETTINGS = 0)
             CASE_SETTINGS:
                 -1: Don't use Latin letter
                 0: Use lower-case only
-                1: Use lpper-case only
+                1: Use upper-case only
                 2: Use all upper/lower-case Latin letter
             NUMBER_SETTINGS: From 0->9
                 0: Don't use number
@@ -124,7 +124,8 @@ string rand_str(int n, int CASE_SETTINGS = 0, int NUMBER_SETTINGS = 0)
         switch (NUMBER_SETTINGS)
         {
             case 1: seed.push_back(char(rand_int('9', '0')));
-                    break;            case 2: random_shuffle(whole(__even));
+                    break;
+            case 2: random_shuffle(whole(__even));
                     seed.push_back(__even[1]);
                     break;
             case 3: random_shuffle(whole(__odd));
