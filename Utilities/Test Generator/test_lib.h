@@ -42,7 +42,6 @@ using namespace std;
 //Macroes
 #define sp " "
 #define el "\n"
-#define task "PLANTREE"
 #define fi first
 #define se second
 #define pb push_back

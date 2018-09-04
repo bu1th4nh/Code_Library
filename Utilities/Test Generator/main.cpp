@@ -45,7 +45,7 @@ using namespace std;
 //Macroes
 #define sp " "
 #define el "\n"
-#define task "PLANTREE"
+#define task ""
 #define fi first
 #define se second
 #define pb push_back
@@ -75,14 +75,59 @@ typedef vector<vb> vvb;
 typedef vector<vii> vvii;
 
 
+
+auto timeStart = chrono::steady_clock::now();
+auto timeEnd   = chrono::steady_clock::now();
+
+
 //==================================================
-//Output
+//Input and answer generating procedures
+void Generate_input()
+{
+    ofstream test_inp(task".inp");
+
+    //Write your input-generating code here
+}
+void Generate_answer()
+{
+    ifstream test_inp(task".inp");
+    ofstream test_ans(task".ans");
+
+    //Write your answer-generating code here
+}
+
+//==================================================
+//Checker
 void Checker()
 {
-    FOR(i, 1, 30) cout << rand_double(100,10) << el;
-    cout << el;
-    FOR(i, 1, 30) cout << rand_BigInt(20) << el;
+    int T;
+    cout << "How many fucking test do you want to generate? Enter your value here: "; cin >> T;
+
+    FOR(iTest, 1, T)
+    {
+        cout << "Test #" << iTest << ":\n";
+
+
+        Generate_input();
+        cout << "Input generating completed\n";
+
+
+        timeStart = chrono::steady_clock::now();
+        Generate_answer();
+        timeEnd   = chrono::steady_clock::now();
+        cout << "Answer generating completed with elapsed time: " << chrono::duration<double>(timeEnd - timeStart).count() << " second(s)" << el;
+
+
+        timeStart = chrono::steady_clock::now();
+        system(task);
+        timeEnd   = chrono::steady_clock::now();
+        cout << "Sample program completed with elapsed time: " << chrono::duration<double>(timeEnd - timeStart).count() << " second(s)" << el;
+
+        system("fc "task".out "task".ans");
+    }
+
 }
+
 
 //Main Procedure
 int main()
