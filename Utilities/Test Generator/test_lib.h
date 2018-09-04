@@ -78,7 +78,7 @@ mt19937_64 GEN(chrono::steady_clock::now().time_since_epoch().count());
 
 
 //=====================================
-//Random Utilities
+//Generating Utilities
 int rand_int(int limit, int start = 0)
 {
     uniform_int_distribution<> die(start, limit);
