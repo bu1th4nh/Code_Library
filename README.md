@@ -1,4 +1,4 @@
 # Code_Library 
-My code (including work-in-progress code) library.
+My implementation (including work-in-progress code) library for some algorithms and data structures in programming contests.
 
 P/s: **Use at your own risk**
