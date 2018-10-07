@@ -13,6 +13,12 @@ This file contains all of the necessary function to generate data with many opti
 ## Main File - `main.cpp`
 This file is the main skeleton of the generator. It provides input and answer generating, along with test-checking and judging feature with time indicator. You can see the code to understand more.
 
+## Examples:
+This is an example of using data-generating functions
+
+       std::cout << rand_str(10, 0, 0) << std::endl;      //Generate a string with maximum length 10, use lowercase Latin letters only. 
+       std::cout << rand_BigInt(1000) << std::endl;       //Generate a Big Integer <= 1e1000
+       std::cout << rand_double(200, 30) << std::endl;    //Generate a FP number <= 1e200 and FP rounding limit is 1e-30.
 
 **If you want to generate negative number, simply add this line after `rand_int(...)`: ` * ((rand_int(1, 0) == 1) ? -1 : 1);`**
 
