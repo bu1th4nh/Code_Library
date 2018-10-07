@@ -5,10 +5,10 @@ It's **Visual Studio** and **GCC** - compatible for generating test for programm
 ##The Test Library File - `test_lib.h`
 This file contains all of the necessary function to generate data with many option available.
 
-    * `rand_int` - Integer generator: This function generates positive integer from `start` (default is 0) to `limit`
-    * `rand_str` - String generator: This function generates strings, with upper/lowercase Latin letter and numbers, which can chage in `NUMBER_SETTINGS` and `CASE_SETTINGS` parameter, and, of couurse - length of the string!
-    * `rand_BigInt` - Big Integers Generator - *to infinity and beyound!* - This function generates Big Integers, of course it also generates Small Int :P. The only limit is *length*
-    * `rand_double` - This function generates positive floating-point numbers, and you can change the FP rounding limit and natural part limit.
+    1. `rand_int` - Integer generator: This function generates positive integer from `start` (default is 0) to `limit`
+    2. `rand_str` - String generator: This function generates strings, with upper/lowercase Latin letter and numbers, which can chage in `NUMBER_SETTINGS` and `CASE_SETTINGS` parameter, and, of couurse - length of the string!
+    3. `rand_BigInt` - Big Integers Generator - *to infinity and beyound!* - This function generates Big Integers, of course it also generates Small Int :P. The only limit is *length*
+    4. `rand_double` - This function generates positive floating-point numbers, and you can change the FP rounding limit and natural part limit.
 
 ##Main File - `main.cpp`
 This file is the main skeleton of the generator. It provides input and answer generating, along with test-checking and judging feature with time indicator. You can see the code to understand more.
