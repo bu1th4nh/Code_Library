@@ -31,14 +31,10 @@
 #if __cplusplus >= 201103L
 #include <unordered_map>
 #include <unordered_set>
-#include <chrono>
 #include <random>
 #endif // __cplusplus
 
 using namespace std;
-
-
-#include "test_lib.h"
 
 
 //=====================================
@@ -53,7 +49,6 @@ using namespace std;
 #define siz(x) (int)(x.size())
 #define len(x) (int)(x.length())
 #define whole(x) x.begin(), x.end()
-#define whole1(x) x.begin()+1, x.end()
 #define FOR(i, x, y) for(int i=x; i<=y; ++i)
 #define FORl(i, x, y) for(int i=x; i<y; ++i)
 #define FORb(i, x, y) for(int i=x; i>=y; --i)
@@ -61,6 +56,7 @@ using namespace std;
 #define MEMS(x, val) memset(x, val, sizeof(x))
 #define FILEOP() {freopen(task".inp", "r", stdin); freopen(task".out", "w", stdout);}
 #define FILEOP_DEBUG() {freopen(task".inp", "r", stdin); freopen(task".out", "w", stdout); freopen(task".err", "w", stderr);}
+
 
 //=====================================
 //Typedefs
@@ -76,62 +72,50 @@ typedef vector<vii> vvii;
 
 
 
-auto timeStart = chrono::steady_clock::now();
-auto timeEnd   = chrono::steady_clock::now();
 
-
-//==================================================
-//Input and answer generating procedures
-void Generate_input()
+//=====================================
+//Functions and procedures
+//Initialization and preparation
+void FileInit()
 {
-    ofstream test_inp(task".inp");
-
-    //Write your input-generating code here
+    FILEOP()
 }
-void Generate_answer()
+void FileDebug()
 {
-    ifstream test_inp(task".inp");
-    ofstream test_ans(task".ans");
-
-    //Write your answer-generating code here
+    FILEOP_DEBUG()
+}
+void FileClose()
+{
+    fclose(stdin);
+    fclose(stdout);
 }
 
-//==================================================
-//Checker
-void Checker()
+//Enter
+void Enter()
 {
-    int T;
-    cout << "How many fucking test do you want to generate? Enter your value here: "; cin >> T;
-
-    FOR(iTest, 1, T)
-    {
-        cout << "Test #" << iTest << ":\n";
-
-
-        Generate_input();
-        cout << "Input generating completed\n";
-
-
-        timeStart = chrono::steady_clock::now();
-        Generate_answer();
-        timeEnd   = chrono::steady_clock::now();
-        cout << "Answer generating completed with elapsed time: " << chrono::duration<double>(timeEnd - timeStart).count() << " second(s)" << el;
-
-
-        timeStart = chrono::steady_clock::now();
-        system(task);
-        timeEnd   = chrono::steady_clock::now();
-        cout << "Sample program completed with elapsed time: " << chrono::duration<double>(timeEnd - timeStart).count() << " second(s)" << el;
-
-        system("fc "task".out "task".ans");
-    }
-
+	//Enter value
 }
+
+//Check
+
+
+
+
+
+//Process
+
+
+
+
+//Output
+
+
+
 
 
 //Main Procedure
 int main()
 {
-    Checker();
+    //Your code goes here
     return 0;
 }
