@@ -3,7 +3,9 @@
 This is **Visual Studio** and **GCC** - compatible for generating test for programming contests. Up to now it can only generate fundamental data type such as integers, strings,floating-point number and Big Integers. And there will have more option in the future such as graphs, maze, etc... I use Mersenne MT19937 pseudo-random generator for producing more "random" output. You can find more information [here](https://en.wikipedia.org/wiki/Mersenne_Twister)
 
 ## The Test Library File - `test_lib.h`
-This file contains all of the necessary function to generate data with many option available.
+This file contains all of the necessary function to generate data with many option available. If you want to use the library, simply drop this file into the same directory with your `main.cpp` file and add this line into your code:
+
+          #include "test_lib.h"
 
    * `rand_int` - Integer generator: This function generates positive integer from `start` (default is 0) to `limit`
    * `rand_str` - String generator: This function generates strings, with upper/lowercase Latin letter and numbers, which can chage in `NUMBER_SETTINGS` and `CASE_SETTINGS` parameter, and, of couurse - length of the string!
