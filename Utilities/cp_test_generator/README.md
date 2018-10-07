@@ -1,6 +1,6 @@
 # Test Generating Template and Supporting Library 
 
-It's **Visual Studio** and **GCC** - compatible for generating test for programming contests. Up to now it can only generate fundamental data type such as integers, strings,floating-point number and Big Integers. And there will have more option in the future such as graphs, maze, etc... I use Mersenne MT19937 pseudo-random generator for producing more "random" output. You can find more information [here](https://en.wikipedia.org/wiki/Mersenne_Twister)
+This is **Visual Studio** and **GCC** - compatible for generating test for programming contests. Up to now it can only generate fundamental data type such as integers, strings,floating-point number and Big Integers. And there will have more option in the future such as graphs, maze, etc... I use Mersenne MT19937 pseudo-random generator for producing more "random" output. You can find more information [here](https://en.wikipedia.org/wiki/Mersenne_Twister)
 
 ## The Test Library File - `test_lib.h`
 This file contains all of the necessary function to generate data with many option available.
