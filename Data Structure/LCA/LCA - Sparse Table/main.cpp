@@ -51,7 +51,7 @@ using namespace std;
 
 //=====================================
 //Typedef
-struct LongestCommonAncestor
+struct LowestCommonAncestor
 {
     typedef vector<int> vi;
     typedef vector<vi> vvi;
@@ -94,16 +94,16 @@ struct LongestCommonAncestor
 
 
 
-    LongestCommonAncestor(int __n)
+    LowestCommonAncestor(int __n)
     {
         n = __n;
         dist = vi(n+2, 0);
         P = vvi(20, vi(n+2, 0));
     }
-    LongestCommonAncestor() {}
+    LowestCommonAncestor() {}
 
 
-    ~LongestCommonAncestor() {}
+    ~LowestCommonAncestor() {}
 
 
 };
@@ -133,7 +133,7 @@ void SPOJ_LCA()
     {
         scanf("%d", &n);
 
-        LongestCommonAncestor lca(n);
+        LowestCommonAncestor lca(n);
 
         FOR(i, 1, n)
         {
