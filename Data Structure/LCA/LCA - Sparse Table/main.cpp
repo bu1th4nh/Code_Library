@@ -56,7 +56,7 @@ struct LowestCommonAncestor
     typedef vector<int> vi;
     typedef vector<vi> vvi;
 
-    vvi P;                  //P[i][j]: The 2^i-th ancestor of node j
+    vvi P;                  //P[i][j]: The 2^i-th ancestor of j-th node
     vi dist;                //dist[i]: the depth of i-th node
     int n, root;
 
