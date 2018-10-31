@@ -46,84 +46,190 @@ typedef vector<int> vi;
 typedef long long ll;
 
 //=====================================
-//Matrix Class
-#define SIZE 10
-
-template <class _T> class Matrix
+//Matrix Class with modulo
+template<class T> class Matrix
 {
 public:
 
-    _T a[SIZE][SIZE];
+    typedef vector<T> vt;
+    typedef vector<vt> vvt;
+
+    vvt a;
     int m, n;
+    long long mod;
 
-    _T* operator[] (int i)
+
+    //Initialization
+    void initialize(int __m, int __n)
+    {
+        m = __m;
+        n = __n;
+
+        a = vvt(m+1, vt(n+1, T()));
+    }
+    void identity_matrix(int __n)
+    {
+        m = n = __n;
+        a = vvt(n+1, vt(n+1, T()));
+
+        FOR(i, 1, n) a[i][i] = (T)1;
+    }
+
+    //Constructors
+    Matrix(long long __mod, int __m, int __n, const vvt &__a)
+    {
+        mod = __mod;
+        a = __a;
+        n = __n;
+        m = __m;
+    }
+    Matrix(long long __mod, int __m, int __n)
+    {
+        mod = __mod;
+        initialize(__m, __n);
+    }
+    Matrix(long long __mod, int __n)
+    {
+        mod = __mod;
+        identity_matrix(__n);
+    }
+    Matrix() {}
+
+
+    //Operators
+    void operator= (const Matrix<T> &x)
+    {
+        mod = x.mod;
+        a = x.a;
+        m = x.m;
+        n = x.n;
+    }
+    vt& operator[] (int i)
     {
         return a[i];
     }
-    const _T*operator[] (int i) const
+    Matrix<T> operator * (const Matrix<T> &other)
     {
-        return a[i];
-    }
-
-    void clear(int M, int N){ m=M,n=N; int i, j; for (i=1; i<=m; i++) for (j=1; j<=n; j++) a[i][j]=0; }
-
-    void operator = (const Matrix &A);
-
-    Matrix(int M, int N)
-    {
-        clear(M, N);
-    }
-
-};
-
-template <class _T> Matrix<_T>
-basedMatrix(int n)
-{
-    Matrix<_T> R(n, n);
-    FOR(i, 1, n) R[i][i] = 1;
-    return R;
-}
-
-template <class _T> Matrix<_T>
-operator * (const Matrix<_T> &A, const Matrix<_T> &B)
-{
-    Matrix<_T> C(A.m, B.n);
-    FOR(i, 1, A.m)
-    {
-        FOR(j, 1, B.n)
+        Matrix<T> ret(mod, this->m, other.n);
+        FOR(i, 1, this->m)
         {
-            FOR(k, 1, A.n)
+            FOR(j, 1, other.n)
             {
-                C[i][j] +=  A[i][k] * B[k][j];
+                FOR(k, 1, this->n)
+                {
+                    ret.a[i][j] = (ret.a[i][j] + a[i][k] * other.a[k][j]) % mod;
+                }
             }
         }
+        return ret;
     }
-    return C;
-}
-
-template <class _T> Matrix<_T>
-operator ^ (const Matrix<_T> &A, ll k)
-{
-    if(k==0) return basedMatrix<_T> (A.n);
-    if(k==1) return A;
-    Matrix<_T> p = A^(k/2);
-    p = p*p;
-    if(k&1) return p*A;
-    else return p;
-}
-
-template <class _T> void Matrix<_T> ::
-operator = (const Matrix<_T> &A)
-{
-    FOR(i, 1, A.m)
+    Matrix<T> operator ^ (long long k)
     {
-        FOR(j, 1, A.n)
+        Matrix<T> ret(mod, this->n);
+        Matrix<T> a = *this;
+
+        if(k == 0) return Matrix(mod, this->n);
+        FOR(i, 0, 63)
         {
-            a[i][j] = A[i][j];
+            if((k >> i) & 1 == 1) ret = ret * a;
+            a = a * a;
         }
+
+        return ret;
     }
-    m = A.m, n = A.n;
-}
+};
+
+
+//=====================================
+//Matrix Class without modulo
+template<class T> class Matrix_without_mod
+{
+public:
+
+    typedef vector<T> vt;
+    typedef vector<vt> vvt;
+
+    vvt a;
+    int m, n;
+
+
+    //Initialization
+    void initialize(int __m, int __n)
+    {
+        m = __m;
+        n = __n;
+
+        a = vvt(m+1, vt(n+1, T()));
+    }
+    void identity_matrix(int __n)
+    {
+        m = n = __n;
+        a = vvt(n+1, vt(n+1, T()));
+
+        FOR(i, 1, n) a[i][i] = (T)1;
+    }
+
+    //Constructors
+    Matrix_without_mod(int __m, int __n, const vvt &__a)
+    {
+        a = __a;
+        n = __n;
+        m = __m;
+    }
+    Matrix_without_mod(int __m, int __n)
+    {
+        initialize(__m, __n);
+    }
+    Matrix_without_mod(int __n)
+    {
+        identity_matrix(__n);
+    }
+    Matrix_without_mod() {}
+
+
+    //Operators
+    void operator= (const Matrix_without_mod<T> &x)
+    {
+        a = x.a;
+        m = x.m;
+        n = x.n;
+    }
+    vt& operator[] (int i)
+    {
+        return a[i];
+    }
+    Matrix_without_mod<T> operator * (const Matrix_without_mod<T> &other)
+    {
+        Matrix_without_mod<T> ret(this->m, other.n);
+        FOR(i, 1, this->m)
+        {
+            FOR(j, 1, other.n)
+            {
+                FOR(k, 1, this->n)
+                {
+                    ret.a[i][j] = (ret.a[i][j] + a[i][k] * other.a[k][j]);
+                }
+            }
+        }
+        return ret;
+    }
+    Matrix_without_mod<T> operator ^ (long long k)
+    {
+        Matrix_without_mod<T> ret(this->n);
+        Matrix_without_mod<T> a = *this;
+
+        if(k == 0) return Matrix_without_mod(this->n);
+        FOR(i, 0, 63)
+        {
+            if((k >> i) & 1 == 1) ret = ret * a;
+            a = a * a;
+        }
+
+        return ret;
+    }
+};
+
+
 
 
 
@@ -139,7 +245,7 @@ int main()
     FOR(i, 1, n)
     {
         ll kk = i - 1;
-        Matrix<ll> A(2, 2);
+        Matrix_without_mod<ll> A(2, 2);
         A[1][1] = 1;
         A[1][2] = 1;
         A[2][1] = 1;
