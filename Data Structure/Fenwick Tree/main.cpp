@@ -76,15 +76,15 @@ void FileClose()
 }
 
 //Fenwick Tree - Point Update/Point Query/Summation Query
-struct SumFenwickTree
+template<class T> struct SumFenwickTree
 {
-    typedef vector<int> vi;
+    typedef vector<T> vt;
 
     int n;
-    vi Tree;
+    vt Tree;
 
 
-    void update(int pos, int value)
+    void update(int pos, T value)
     {
         while(pos <= n)
         {
@@ -92,9 +92,9 @@ struct SumFenwickTree
             pos += pos & (-pos);
         }
     }
-    int query(int pos)
+    T query(int pos)
     {
-        int ret = 0;
+        T ret = T();
         while(pos > 0)
         {
             ret += Tree[pos];
@@ -106,8 +106,8 @@ struct SumFenwickTree
     ~SumFenwickTree() {Tree.clear();}
 
     SumFenwickTree() {}
-    SumFenwickTree(int __n) {n = __n; Tree = vi(__n+4);}
-    SumFenwickTree(int __n, int DefaultValue) {n = __n; Tree = vi(__n+4, DefaultValue);}
+    SumFenwickTree(int __n) {n = __n; Tree = vt(__n+4, T());}
+    SumFenwickTree(int __n, T DefaultValue) {n = __n; Tree = vt(__n+4, DefaultValue);}
 };
 
 //Main Procedure
@@ -119,7 +119,7 @@ int main()
     scanf("%d", &n);
     FOR(i, 1, n) scanf("%d", &a[i]);
 
-    SumFenwickTree ft(65536, 0);
+    SumFenwickTree<int> ft(65536, 0);
     FORb(i, n, 1)
     {
         res += ft.query(a[i] - 1);

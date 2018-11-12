@@ -51,19 +51,19 @@ using namespace std;
 //=====================================
 //Typedef
 //Segment Tree without Lazy Propagation, PU/RQ/Min-Max-Sum Query
-struct SegmentTree
+template<class T> struct SegmentTree
 {
     #define lc id*2
     #define rc id*2+1
-    typedef vector<int> vi;
+    typedef vector<T> vt;
 
 
-    vi ST;
+    vt ST;
     int n;
 
 
     //Build
-    void build(int id, int l, int r, const vi &a)
+    void build(int id, int l, int r, const vt &a)
     {
         if(l > r) return;
 
@@ -78,21 +78,22 @@ struct SegmentTree
 
     }
     //Update and queries
-    void update(int id, int l, int r, int pos, int val)
+    void update(int id, int l, int r, int pos, T val)
     {
         if(pos < l || pos > r) return;
-
+        if(l == r && l == pos)
+        {
+            ST[id] = val;
+            return;
+        }
         ST[id] = max(ST[id], val);
 
-        if(l == r) return;
-
-
         int mid = (l + r) / 2;
-
         update(lc, l    , mid, pos, val);
         update(rc, mid+1, r  , pos, val);
+        ST[id] = max(ST[lc], ST[rc]);
     }
-    int query(int id, int l, int r, int ql, int qr)
+    T query(int id, int l, int r, int ql, int qr)
     {
         if(ql > r || qr < l || l > r || ql > qr) return 0;  //or -INFINITY
         if(ql <= l && r <= qr) return ST[id];
@@ -106,7 +107,7 @@ struct SegmentTree
     //Constructors and destructor
     SegmentTree(int __n)
     {
-        ST = vi (4 * __n + 8);
+        ST = vt(4*__n+8, T());
     }
     SegmentTree() {}
     ~SegmentTree() {}
@@ -114,7 +115,7 @@ struct SegmentTree
 
 
 //Segment Tree w/ Lazy Propagation, RU/RQ/Min-Max-Sum Query
-struct SegmentTreeWithLP
+template<class T> struct SegmentTreeWithLP
 {
     #define lc id*2
     #define rc id*2+1
@@ -122,10 +123,10 @@ struct SegmentTreeWithLP
 
     struct Node
     {
-        int val, lazy;
-        Node(): val(0), lazy(0) {}
-        Node(int __v): val(__v), lazy(0) {}
-        Node(int __v, int __l): val(__v), lazy(__l) {}
+        T val, lazy;
+        Node(): val(T()), lazy(T()) {}
+        Node(T __v): val(__v), lazy(0) {}
+        Node(T __v, T __l): val(__v), lazy(__l) {}
     };
 
 
@@ -134,7 +135,7 @@ struct SegmentTreeWithLP
     //Lazy Propagation
     void push_down(int id)
     {
-        int t = ST[id].lazy;
+        T t = ST[id].lazy;
 
         ST[lc].lazy += t;
         ST[lc].val += t;
@@ -145,7 +146,7 @@ struct SegmentTreeWithLP
         ST[id].lazy = 0;
     }
     //Update and queries
-    void update(int id, int l, int r, int up_l, int up_r, int v)
+    void update(int id, int l, int r, int up_l, int up_r, T v)
     {
         if(up_r <  l || r <  up_l) return;
         if(up_l <= l && r <= up_r)
@@ -163,7 +164,7 @@ struct SegmentTreeWithLP
 
         ST[id].val = max(ST[lc].val, ST[rc].val);
     }
-    int query(int id, int l, int r, int ql, int qr)
+    T query(int id, int l, int r, int ql, int qr)
     {
         if(qr <  l || r <  ql) return -INFINITY;
         if(ql <= l && r <= qr) return ST[id].val;
@@ -204,7 +205,7 @@ void QMAX()
     int nUpdate, nQuery, n;
     scanf("%d%d", &n, &nUpdate);
 
-    SegmentTree st(n+3);
+    SegmentTree<int> st(n+3);
     vi vect(n+3, 0);
 
 
@@ -243,7 +244,7 @@ void LIS()
         scanf("%d", &a[i]);
         b[i] = a[i];
     }
-    SegmentTree st(n+1);
+    SegmentTree<int> st(n+1);
 
 
 
@@ -271,7 +272,7 @@ void QMAX2()
 
 
     scanf("%d%d", &n, &m);
-    SegmentTreeWithLP st(n);
+    SegmentTreeWithLP<int> st(n);
 
     while(m--)
     {

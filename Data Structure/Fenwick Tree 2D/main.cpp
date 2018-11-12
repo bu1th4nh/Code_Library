@@ -49,32 +49,32 @@ using namespace std;
 
 //=====================================
 //Two-dimensional Fenwick Tree
-struct FenwickTree2D
+template<class T> struct FenwickTree2D
 {
-    typedef vector<int> vi;
-    typedef vector<vi> vvi;
+    typedef vector<T> vt;
+    typedef vector<vt> vvt;
 
-    vvi T;
+    vvt FT;
     int n;
 
-    void update(int x, int y, int val)
+    void update(int x, int y, T val)
     {
         for(int i = x; i <= n; i += i & (-i))
         {
             for(int j = y; j <= n; j += j & (-j))
             {
-                T[i][j] += val;
+                FT[i][j] += val;
             }
         }
     }
-    int query(int x, int y)
+    T query(int x, int y)
     {
-        int ret = 0;
+        T ret = T();
         for(int i = x; i > 0; i -= i & (-i))
         {
             for(int j = y; j > 0; j -= j & (-j))
             {
-                ret += T[i][j];
+                ret += FT[i][j];
             }
         }
         return ret;
@@ -86,7 +86,7 @@ struct FenwickTree2D
     FenwickTree2D(int __n)
     {
         n = __n;
-        T = vvi(__n+1, vi(__n+1, 0));
+        FT = vvt(__n+1, vt(__n+1, T()));
     }
 };
 
@@ -109,7 +109,7 @@ void NKMOBILE()
 {
     int s, ctrl;
     scanf("%d%d", &s, &s);
-    FenwickTree2D ft(s);
+    FenwickTree2D<int> ft(s);
 
     while(scanf("%d", &ctrl) && ctrl != 3)
     {
@@ -140,7 +140,7 @@ void MATSUM()
     while(tc--)
     {
         scanf("%d", &s);
-        FenwickTree2D ft(s);
+        FenwickTree2D<int> ft(s);
 
         while(scanf("%s", &str) == 1)
         {
