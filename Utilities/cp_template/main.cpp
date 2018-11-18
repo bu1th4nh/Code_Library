@@ -69,7 +69,7 @@ using namespace std;
     freopen(task".out", "w", stdout);   \
 }
 #define FILEOP_DEBUG()                  \
-{                                       \  
+{                                       \
     freopen(task".inp", "r", stdin);    \
     freopen(task".out", "w", stdout);   \
     freopen(task".err", "w", stderr);   \
