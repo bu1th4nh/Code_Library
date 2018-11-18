@@ -84,7 +84,7 @@ using namespace std;
 
 
 //=====================================
-//Auxilary Functions
+//Auxilary Functions and Fast I/O
 #ifdef OPTIONAL_FEATURE
     template<class T, class R> T max(T &x, R &y)
     {
@@ -111,6 +111,37 @@ using namespace std;
         return (x = (x < 0) ? -x : x);
     }
 #endif
+template<class T> inline void read(T &ret)
+{
+    ret = T();
+    char c = 0;
+    bool neg = 0;
+
+    while(isdigit(c) == 0 && c != '-') c = getchar();
+    if(c == '-')
+    {
+        neg = 1;
+        c = getchar();
+    }
+
+    for(; isdigit(c) != 0; c = getchar()) ret = ret * 10 + c - '0';
+    ret = (neg) ? -ret : ret;
+
+    #ifdef DEBUG
+        cerr << "FastScan Diagnostic: " << ret << el;
+    #endif
+}
+template<class T> void print(T x)
+{
+    if(x < 0)
+    {
+        putchar('-');
+        x *= -1;
+    }
+
+    if(x > 9) print(x / 10);
+    putchar(x % 10 + '0');
+}
 
 //=====================================
 //Constants
@@ -152,37 +183,7 @@ void FileClose()
     fclose(stdin);
     fclose(stdout);
 }
-template<class T> inline void read(T &ret)
-{
-    ret = T();
-    char c = 0;
-    bool neg = 0;
 
-    while(isdigit(c) == 0 && c != '-') c = getchar();
-    if(c == '-')
-    {
-        neg = 1;
-        c = getchar();
-    }
-
-    for(; isdigit(c) != 0; c = getchar()) ret = ret * 10 + c - '0';
-    ret = (neg) ? -ret : ret;
-
-    #ifdef DEBUG
-        cerr << "FastScan Diagnostic: " << ret << el;
-    #endif
-}
-template<class T> void print(T x)
-{
-    if(x < 0)
-    {
-        putchar('-');
-        x *= -1;
-    }
-
-    if(x > 9) print(x / 10);
-    putchar(x % 10 + '0');
-}
 
 //Enter
 void Enter()
