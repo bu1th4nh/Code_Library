@@ -111,6 +111,7 @@ using namespace std;
         return (x = (x < 0) ? -x : x);
     }
 #endif
+//Fast I/O
 template<class T> inline void read(T &ret)
 {
     ret = T();
@@ -162,7 +163,6 @@ typedef vector<vii> vvii;
 
 
 
-
 //=====================================
 //Functions and procedures
 //File I/O and utilities
@@ -192,7 +192,6 @@ void Enter()
 }
 
 //Check
-
 
 
 
