@@ -6,10 +6,10 @@
 **                       |_.__/ \__,_|_|\__|_| |_|  |_| |_| |_|_| |_|                       **
 \*==========================================================================================*/
 //=====================================
-//Solution Briefing - Foreword
-
-
-
+//Briefing
+/*
+    Heavy-Light Decomposition - to flatten the tree into chains and optimize time complexity
+*/
 //=====================================
 //Libraries and namespaces
 //#include <bits/stdc++.h>
