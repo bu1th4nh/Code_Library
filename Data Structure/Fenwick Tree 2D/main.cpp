@@ -5,6 +5,12 @@
 **                                 | |_) | |_| | | |_| | | |__   _| | | | | | |                                 **
 **                                 |_.__/ \__,_|_|\__|_| |_|  |_| |_| |_|_| |_|                                 **
 \*==============================================================================================================*/
+//=====================================
+//Briefing
+/*
+    This is an implementation for 2D version of Fenwick Tree
+*/
+//=====================================
 //Libraries and namespaces
 //#include <bits/stdc++.h>
 #include <algorithm>
@@ -47,6 +53,12 @@ using namespace std;
 #define FILEOP() {freopen(task".inp", "r", stdin); freopen(task".out", "w", stdout);}
 
 
+//=====================================
+//Overview - Two-dimensional Fenwick Tree
+/*  
+    * Author : bu1th4nh.
+    * Status : tested on SPOJ-NKMOBILE and SPOJ-MATSUM problem.
+*/
 //=====================================
 //Two-dimensional Fenwick Tree
 template<class T> struct FenwickTree2D

@@ -84,9 +84,9 @@ using namespace std;
 //=====================================
 //Overview - Heavy-Light Decomposition
 /*  
-    Author : Al.Cash, forked by me.
-    Status : tested on SPOJ_QTREE and SPOJ_QTREEX problem.
-    This implementation applied for rooted tree which has initial weight.
+    * Author : Al.Cash, forked by me.
+    * Status : tested on SPOJ_QTREE and SPOJ_QTREEX problem.
+    * This implementation applied for rooted tree which has initial weight.
 */
 //=====================================
 //Main Class
@@ -193,7 +193,7 @@ public:
     }
     int query_path(int u, int v)
     {
-        int ret = -inf;
+        int ret = -inf;   //Some critical value
         processPath(u, v, [this, &ret](int l, int r) {
             ret = max(ret, st.query(1, 1, n, l, r));
         });

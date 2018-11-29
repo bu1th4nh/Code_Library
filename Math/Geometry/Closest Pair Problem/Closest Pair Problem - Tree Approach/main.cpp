@@ -5,6 +5,15 @@
 **                       | |_) | |_| | | |_| | | |__   _| | | | | | |                       **
 **                       |_.__/ \__,_|_|\__|_| |_|  |_| |_| |_|_| |_|                       **
 \*==========================================================================================*/
+//=====================================
+//Briefing
+/*
+    This is STL approach for finding closest pair on a 2D plane
+
+    * Status: tested
+    * Author: Le Quang Tuan, forked by bu1th4nh
+*/
+//=====================================
 //Libraries and namespaces
 //#include <bits/stdc++.h>
 #include <algorithm>

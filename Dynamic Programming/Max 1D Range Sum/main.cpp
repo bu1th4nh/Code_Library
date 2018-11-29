@@ -5,6 +5,15 @@
 **                       | |_) | |_| | | |_| | | |__   _| | | | | | |                       **
 **                       |_.__/ \__,_|_|\__|_| |_|  |_| |_| |_|_| |_|                       **
 \*==========================================================================================*/
+//=====================================
+//Briefing
+/*
+    This is the implementation for finding Max 1D Range Sum
+
+    * Status: tested
+    * Author: bu1th4nh
+*/
+//=====================================
 //Libraries and namespaces
 //#include <bits/stdc++.h>
 #include <algorithm>

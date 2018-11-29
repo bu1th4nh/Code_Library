@@ -5,6 +5,12 @@
 **                       | |_) | |_| | | |_| | | |__   _| | | | | | |                       **
 **                       |_.__/ \__,_|_|\__|_| |_|  |_| |_| |_|_| |_|                       **
 \*==========================================================================================*/
+//=====================================
+//Briefing
+/*
+    This is an implementation for finding Lowest Common Ancestor, or LCA using Sparse Table.
+*/
+//=====================================
 //Libraries and namespaces
 //#include <bits/stdc++.h>
 #include <algorithm>
@@ -48,7 +54,12 @@ using namespace std;
 #define FILEOP() {freopen(task".inp", "r", stdin); freopen(task".out", "w", stdout);}
 #define FILEOP_DEBUG() {freopen(task".inp", "r", stdin); freopen(task".out", "w", stdout); freopen(task".err", "w", stderr);}
 
-
+//=====================================
+//Overview - LCA implementation - Sparse Table method.
+/*  
+    * Author : bu1th4nh.
+    * Status : tested on many problems.
+*/
 //=====================================
 //Typedef
 struct LowestCommonAncestor

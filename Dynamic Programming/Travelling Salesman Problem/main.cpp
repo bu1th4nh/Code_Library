@@ -5,6 +5,16 @@
 **                       | |_) | |_| | | |_| | | |__   _| | | | | | |                       **
 **                       |_.__/ \__,_|_|\__|_| |_|  |_| |_| |_|_| |_|                       **
 \*==========================================================================================*/
+//=====================================
+//Briefing
+/*
+    This is the DP approach implementation for solving TSP problem.
+    
+    * Complexity: O(n^2 * 2^n)
+    * Status: tested
+    * Author: bu1th4nh
+*/
+//=====================================
 //Libraries and namespaces
 //#include <bits/stdc++.h>
 #include <algorithm>

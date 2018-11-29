@@ -1,4 +1,4 @@
-///                       Test Generating Library v1.00 by bu1th4nh                       ///
+///                       Test Generating Library v1.1 by bu1th4nh                       ///
 /*==========================================================================================*\
 **                        _           _ _   _     _  _         _                            **
 **                       | |__  _   _/ | |_| |__ | || |  _ __ | |__                         **
@@ -6,6 +6,7 @@
 **                       | |_) | |_| | | |_| | | |__   _| | | | | | |                       **
 **                       |_.__/ \__,_|_|\__|_| |_|  |_| |_| |_|_| |_|                       **
 \*==========================================================================================*/
+//=====================================
 //Libraries and namespaces
 //#include <bits/stdc++.h>
 #include <algorithm>
@@ -15,6 +16,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <cassert>
 #include <fstream>
 #include <functional>
 #include <iostream>
@@ -32,8 +34,8 @@
 #if __cplusplus >= 201103L
 #include <unordered_map>
 #include <unordered_set>
-#include <chrono>
 #include <random>
+#include <chrono>
 #endif // __cplusplus
 
 using namespace std;
@@ -41,23 +43,33 @@ using namespace std;
 
 //=====================================
 //Macroes
-#define sp " "
-#define el "\n"
+#define sp ' '
+#define el '\n'
+#define task ""
+#define maxinp ()
 #define fi first
 #define se second
 #define pb push_back
-#define maxinp (int)()
-#define siz(x) (int)(x.size())
-#define len(x) (int)(x.length())
-#define whole(x) x.begin(), x.end()
-#define whole1(x) x.begin()+1, x.end()
-#define FOR(i, x, y) for(int i=x; i<=y; ++i)
-#define FORl(i, x, y) for(int i=x; i<y; ++i)
-#define FORb(i, x, y) for(int i=x; i>=y; --i)
-#define FORlb(i, x, y) for(int i=x; i>y; --i)
+#define whole(x) x.begin(),x.end()
+#define whole_1(x) x.begin()+1,x.end()
+#define r_whole(x) x.rbegin(),x.rend()
+#define FOR(i, x, y) for(auto i=x; i<=y; ++i)
+#define FORl(i, x, y) for(auto i=x; i<y; ++i)
+#define FORb(i, x, y) for(auto i=x; i>=y; --i)
+#define FORlb(i, x, y) for(auto i=x; i>y; --i)
 #define MEMS(x, val) memset(x, val, sizeof(x))
-#define FILEOP() {freopen(task".inp", "r", stdin); freopen(task".out", "w", stdout);}
-#define FILEOP_DEBUG() {freopen(task".inp", "r", stdin); freopen(task".out", "w", stdout); freopen(task".err", "w", stderr);}
+#define FILEOP()                        \
+{                                       \
+    freopen(task".inp", "r", stdin);    \
+    freopen(task".out", "w", stdout);   \
+}
+#define FILEOP_DEBUG()                  \
+{                                       \
+    freopen(task".inp", "r", stdin);    \
+    freopen(task".out", "w", stdout);   \
+    freopen(task".err", "w", stderr);   \
+}
+
 
 //=====================================
 //Typedefs
@@ -80,10 +92,28 @@ mt19937_64 GEN(chrono::steady_clock::now().time_since_epoch().count());
 
 //=====================================
 //Generating Utilities
-int rand_int(int limit, int start = 0)
+template<class R, class T> T rand_int(R start, T limit, int SIGN_SETTING = 0)
 {
-    uniform_int_distribution<> die(start, limit);
-    return die(GEN);
+
+    /*
+            SIGN SETTINGS:
+                -1: Use negative integers only
+                0: Use positive integers only
+                1: Use both positive and negative integers
+    */
+
+
+    if(start > limit) swap(start, limit);
+    uniform_int_distribution<int> pos(0, 1);
+    uniform_int_distribution<T> die((T)start, (T)limit);
+
+    switch (SIGN_SETTING)
+    {
+        case  0: return die(GEN);                                   break;
+        case -1: return die(GEN) * (T)-1;                           break;
+        case  1: return die(GEN) * (pos(GEN) == 0 ? (T)-1 : (T)1);  break;
+    }
+    return 0;
 }
 string rand_str(int n, int CASE_SETTINGS = 0, int NUMBER_SETTINGS = 0)
 {
@@ -112,18 +142,18 @@ string rand_str(int n, int CASE_SETTINGS = 0, int NUMBER_SETTINGS = 0)
         seed.clear();
         switch(CASE_SETTINGS)
         {
-            case 0: seed.push_back(char(rand_int('z', 'a')));
+            case 0: seed.push_back(char(rand_int('a', 'z')));
                     break;
-            case 1: seed.push_back(char(rand_int('Z', 'A')));
+            case 1: seed.push_back(char(rand_int('A', 'Z')));
                     break;
-            case 2: seed.push_back(char(rand_int('z', 'a')));
-                    seed.push_back(char(rand_int('Z', 'A')));
+            case 2: seed.push_back(char(rand_int('a', 'z')));
+                    seed.push_back(char(rand_int('A', 'Z')));
                     break;
             default: break;
         }
         switch (NUMBER_SETTINGS)
         {
-            case 1: seed.push_back(char(rand_int('9', '0')));
+            case 1: seed.push_back(char(rand_int('0', '9')));
                     break;
             case 2: random_shuffle(whole(__even));
                     seed.push_back(__even[1]);
@@ -143,27 +173,38 @@ string rand_str(int n, int CASE_SETTINGS = 0, int NUMBER_SETTINGS = 0)
 string rand_BigInt(int NUMBER_LIMIT)
 {
     string ret;
-    int num = rand_int(NUMBER_LIMIT, 0);
+    int num = rand_int(0, NUMBER_LIMIT);
 
     if(num == 0) ret += '0';
-    ret += char('0' + rand_int(9, 1));
-    FOR(i, 2, num) ret += char('0' + rand_int(9, 0));
+    else
+    {
+        ret += char('0' + rand_int(1, 9));
+        FOR(i, 2, num) ret += char('0' + rand_int(0, 9));
+    }
 
     return ret;
 }
 string rand_double(int NUMBER_LIMIT, int FP_RND_LIMIT)
 {
     string ret;
-    int num    = rand_int(NUMBER_LIMIT, 0);
-    int fp_rnd = rand_int(FP_RND_LIMIT, 0);
+    int num    = rand_int(0, NUMBER_LIMIT);
+    int fp_rnd = rand_int(0, FP_RND_LIMIT);
 
     if(num == 0) ret += '0';
-    ret += char('0' + rand_int(9, 1));
-    FOR(i, 2, num) ret += char('0' + rand_int(9, 0));
+    else
+    {
+        ret += char('0' + rand_int(1, 9));
+        FOR(i, 2, num) ret += char('0' + rand_int(0, 9));
+    }
 
     ret += '.';
     if(fp_rnd == 0) ret += '0';
-    FOR(i, 1, fp_rnd) ret += char('0' + rand_int(9, 0));
+    FOR(i, 1, fp_rnd) ret += char('0' + rand_int(0, 9));
 
     return ret;
 }
+
+
+//=============================================================================//
+/**    CTB, you are always in my heart and in my code <3       #30yearsCTB    **/
+//=============================================================================//

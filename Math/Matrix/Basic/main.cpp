@@ -1,3 +1,16 @@
+/*==============================================================================================================*\
+**                                  _           _ _   _     _  _         _                                      **
+**                                 | |__  _   _/ | |_| |__ | || |  _ __ | |__                                   **
+**                                 | '_ \| | | | | __| '_ \| || |_| '_ \| '_ \                                  **
+**                                 | |_) | |_| | | |_| | | |__   _| | | | | | |                                 **
+**                                 |_.__/ \__,_|_|\__|_| |_|  |_| |_| |_|_| |_|                                 **
+\*==============================================================================================================*/
+//=====================================
+//Briefing
+/*
+    This is an implementation for Matrix
+*/
+//=====================================
 //Libraries and namespaces
 //#include <bits/stdc++.h>
 #include <algorithm>
@@ -45,6 +58,13 @@ typedef pair<int, int> ii;
 typedef vector<int> vi;
 typedef long long ll;
 
+
+//=====================================
+//Overview - Matrix implementation with modulo
+/*  
+    * Author : Nguyen Tien Trung Kien, forked and modified by bu1th4nh.
+    * Status : tested on many problems.
+*/
 //=====================================
 //Matrix Class with modulo
 template<class T> class Matrix

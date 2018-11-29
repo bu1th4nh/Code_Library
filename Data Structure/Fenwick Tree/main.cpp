@@ -5,6 +5,12 @@
 **                                 | |_) | |_| | | |_| | | |__   _| | | | | | |                                 **
 **                                 |_.__/ \__,_|_|\__|_| |_|  |_| |_| |_|_| |_|                                 **
 \*==============================================================================================================*/
+//=====================================
+//Briefing
+/*
+    This is an implementation for Binary Indexed Tree - BIT or Fenwick Tree
+*/
+//=====================================
 //Libraries and namespaces
 //#include <bits/stdc++.h>
 #include <algorithm>
@@ -59,22 +65,13 @@ typedef vector<vi> vvi;
 typedef vector<vb> vvb;
 typedef vector<vii> vvii;
 
-
-
-
 //=====================================
-//Functions and procedures
-//Initialization and preparation
-void FileInit()
-{
-    FILEOP()
-}
-void FileClose()
-{
-    fclose(stdin);
-    fclose(stdout);
-}
-
+//Overview - Fenwick Tree implementation
+/*  
+    * Author : bu1th4nh.
+    * Status : tested on many problems.
+*/
+//=====================================
 //Fenwick Tree - Point Update/Point Query/Summation Query
 template<class T> struct SumFenwickTree
 {

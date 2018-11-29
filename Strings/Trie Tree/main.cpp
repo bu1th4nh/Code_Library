@@ -1,4 +1,3 @@
-///                       Test Generator v1.1 by bu1th4nh                        ///
 /*==========================================================================================*\
 **                        _           _ _   _     _  _         _                            **
 **                       | |__  _   _/ | |_| |__ | || |  _ __ | |__                         **
@@ -6,6 +5,15 @@
 **                       | |_) | |_| | | |_| | | |__   _| | | | | | |                       **
 **                       |_.__/ \__,_|_|\__|_| |_|  |_| |_| |_|_| |_|                       **
 \*==========================================================================================*/
+//=====================================
+/* Trie Tree implementation
+
+        * Source: own work
+        * Author: bu1th4nh
+        * Status: Tested
+        * Date: 2018/11/29
+*/
+//=====================================
 //Libraries and namespaces
 //#include <bits/stdc++.h>
 #include <algorithm>
@@ -34,12 +42,12 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <random>
-#include <chrono>
 #endif // __cplusplus
 
 using namespace std;
 
-#include "test_lib.h"
+// #define DEBUG
+// #define OPTIONAL_FEATURE
 
 //=====================================
 //Macroes
@@ -70,83 +78,98 @@ using namespace std;
     freopen(task".err", "w", stderr);   \
 }
 
+//Macroes - Optional
+#ifdef OPTIONAL_FEATURE
+    #define pc(x) putchar(x)
+    #define gc() getchar()
+#endif
+
 //=====================================
-//Typedefs
-typedef long long ll;
-typedef unsigned long long ull;
-typedef pair<int, int> ii;
-typedef vector<bool> vb;
-typedef vector<int> vi;
-typedef vector<ii> vii;
-typedef vector<vi> vvi;
-typedef vector<vb> vvb;
-typedef vector<vii> vvii;
-int score = 0;
-
-
-auto timeStart = chrono::steady_clock::now();
-auto timeEnd   = chrono::steady_clock::now();
-
-
-//==================================================
-//Input and answer generating procedures
-void Generate_input()
+//Trie Tree
+template<int MAX_CHARACTER> struct Trie
 {
-    ofstream test_inp(task".inp");
-
-    //Write your input-generating code here
-}
-void Generate_answer()
-{
-    ifstream test_inp(task".inp");
-    ofstream test_ans(task".ans");
-
-    //Write your answer-generating code here
-}
-
-//==================================================
-//Checker
-void Checker()
-{
-    int T;
-    cout << "How many fukking tests do you want to generate? Enter your value here: "; cin >> T;
-
-    FOR(iTest, 1, T)
+    struct Node
     {
-        cout << "Test #" << iTest << ":\n";
+        Node* parent;
+        Node* child[MAX_CHARACTER];
+        bool isLeaf;
+    };
+    Node* root;
 
+    Node* newNode()
+    {
+        Node* ret = new Node;
 
-        Generate_input();
-        cout << "Input generating completed\n";
+        FORl(i, 0, MAX_CHARACTER) ret->child[i] = NULL;
+        ret->parent = NULL;
+        ret->isLeaf = 0;
 
+        return ret;
+    }
+    Node* insert(string s)
+    {
+        Node* n = root;
+        for(char c: s)
+        {
+            if(n->child[c] == NULL)
+            {
+                n->child[c] = newNode();
+            }
+            n = n->child[c];
+        }
+        n->isLeaf = 1;
 
-        timeStart = chrono::steady_clock::now();
-        Generate_answer();
-        timeEnd   = chrono::steady_clock::now();
-        cout << "Answer generating completed with elapsed time: " << chrono::duration<double>(timeEnd - timeStart).count() << " second(s)" << el;
-
-
-        timeStart = chrono::steady_clock::now();
-        system(task);
-        timeEnd   = chrono::steady_clock::now();
-        cout << "Sample program completed with elapsed time: " << chrono::duration<double>(timeEnd - timeStart).count() << " second(s)" << el;
-
-        int ec = 1 - system("fc "task".out "task".ans");
-        puts((ec == 1) ? "Correct" : "Incorrect");
-        score += ec;
+        return n;
+    }
+    bool find(string t)
+    {
+        Node* n = root;
+        for(char c: t)
+        {
+            if(n->child[c] == NULL) return 0;
+            n = n->child[c];
+        }
+        return n->isLeaf;
+    }
+    void DFS(Node *p)
+    {
+        //
     }
 
+    Trie()
+    {
+        root = newNode();
+    }
+};
 
-    printf("Tester finished with partial score: %d / %d\n", score, T);
-    printf("Nr. of Accepted tests:              %d / %d\n", score, T);
-    printf("Nr. of WA tests:                    %d / %d\n", T-score, T);
+
+//=====================================
+//Driver Programs
+void Driver()
+{
+    //Driver Problem: Given n word and m query. Each query: Find a word w.
+    int n, m;
+    string s;
+    Trie<256> trie;
+
+    cin >> n >> m;
+    FOR(i, 1, n)
+    {
+        cin >> s;
+        trie.insert(s);
+    }
+    FOR(i, 1, m)
+    {
+        cin >> s;
+        puts(trie.find(s) ? "true" : "false");
+    }
 }
 
 
 //Main Procedure
 int main()
 {
-    Checker();
+    Driver();
     return 0;
 }
 

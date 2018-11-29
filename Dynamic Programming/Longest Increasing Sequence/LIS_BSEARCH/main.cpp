@@ -1,40 +1,86 @@
+/*==========================================================================================*\
+**                        _           _ _   _     _  _         _                            **
+**                       | |__  _   _/ | |_| |__ | || |  _ __ | |__                         **
+**                       | '_ \| | | | | __| '_ \| || |_| '_ \| '_ \                        **
+**                       | |_) | |_| | | |_| | | |__   _| | | | | | |                       **
+**                       |_.__/ \__,_|_|\__|_| |_|  |_| |_| |_|_| |_|                       **
+\*==========================================================================================*/
+//=====================================
+//Briefing
+/*
+    This is binary search method for finding LIS
+
+    * Status: tested
+    * Author: bu1th4nh
+*/
+//=====================================
 //Libraries and namespaces
 //#include <bits/stdc++.h>
 #include <algorithm>
+#include <bitset>
 #include <cmath>
+#include <complex>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <cassert>
 #include <fstream>
+#include <functional>
 #include <iostream>
 #include <iomanip>
+#include <map>
 #include <queue>
+#include <set>
+#include <sstream>
 #include <stack>
 #include <string>
+#include <tuple>
 #include <vector>
 #include <utility>
+
+#if __cplusplus >= 201103L
+#include <unordered_map>
+#include <unordered_set>
+#include <random>
+#endif // __cplusplus
+
 using namespace std;
 
+// #define DEBUG 
+// #define OPTIONAL_FEATURE
 
 //=====================================
-//Macros
+//Macroes
+#define sp ' '
+#define el '\n'
 #define task ""
-#define maxvalueinp (int)(65536)
-#define MODUL (int)(1e9+57)
-#define len(x) (int)(x.length())
-#define siz(x) (int)(x.size())
-#define whole(x) x.begin(), x.end()
-#define FOR(i, x, y) for(int i=x; i<=y; ++i)
-#define FORl(i, x, y) for(int i=x; i<y; ++i)
-#define FORb(i, x, y) for(int i=x; i>=y; --i)
-#define FORlb(i, x, y) for(int i=x; i>y; --i)
+#define maxinp (65536)
+#define fi first
+#define se second
+#define pb push_back
+#define whole(x) x.begin(),x.end()
+#define whole_1(x) x.begin()+1,x.end()
+#define r_whole(x) x.rbegin(),x.rend()
+#define FOR(i, x, y) for(auto i=x; i<=y; ++i)
+#define FORl(i, x, y) for(auto i=x; i<y; ++i)
+#define FORb(i, x, y) for(auto i=x; i>=y; --i)
+#define FORlb(i, x, y) for(auto i=x; i>y; --i)
 #define MEMS(x, val) memset(x, val, sizeof(x))
-#define FILEOP(x) freopen(x".inp", "r", stdin); freopen(x".out", "w", stdout);
-
+#define FILEOP()                        \
+{                                       \
+    freopen(task".inp", "r", stdin);    \
+    freopen(task".out", "w", stdout);   \
+}
+#define FILEOP_DEBUG()                  \
+{                                       \
+    freopen(task".inp", "r", stdin);    \
+    freopen(task".out", "w", stdout);   \
+    freopen(task".err", "w", stderr);   \
+}
 //=====================================
 //Typedef
 typedef vector<int> vi;
-int F[maxvalueinp];
+int F[maxinp];
 int n, res;
 vi seq;
 

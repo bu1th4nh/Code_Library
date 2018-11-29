@@ -1,4 +1,3 @@
-///                       Test Generator v1.1 by bu1th4nh                        ///
 /*==========================================================================================*\
 **                        _           _ _   _     _  _         _                            **
 **                       | |__  _   _/ | |_| |__ | || |  _ __ | |__                         **
@@ -6,6 +5,16 @@
 **                       | |_) | |_| | | |_| | | |__   _| | | | | | |                       **
 **                       |_.__/ \__,_|_|\__|_| |_|  |_| |_| |_|_| |_|                       **
 \*==========================================================================================*/
+//=====================================
+/* Briefing
+
+    This is the implementation for Dijkstra's Algorithm
+
+        * Author: bu1th4nh
+        * Status: tested
+        * Date: 2018/11/29
+*/
+//=====================================
 //Libraries and namespaces
 //#include <bits/stdc++.h>
 #include <algorithm>
@@ -34,12 +43,12 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <random>
-#include <chrono>
 #endif // __cplusplus
 
 using namespace std;
 
-#include "test_lib.h"
+// #define DEBUG
+// #define OPTIONAL_FEATURE
 
 //=====================================
 //Macroes
@@ -70,6 +79,13 @@ using namespace std;
     freopen(task".err", "w", stderr);   \
 }
 
+//Macroes - Optional
+#ifdef OPTIONAL_FEATURE
+    #define pc(x) putchar(x)
+    #define gc() getchar()
+#endif
+
+
 //=====================================
 //Typedefs
 typedef long long ll;
@@ -81,72 +97,77 @@ typedef vector<ii> vii;
 typedef vector<vi> vvi;
 typedef vector<vb> vvb;
 typedef vector<vii> vvii;
-int score = 0;
+int m, n, s, t;
+vvii adj;
+vi dist;
 
 
-auto timeStart = chrono::steady_clock::now();
-auto timeEnd   = chrono::steady_clock::now();
-
-
-//==================================================
-//Input and answer generating procedures
-void Generate_input()
+//=====================================
+//Functions and procedures
+//Enter
+void Enter()
 {
-    ofstream test_inp(task".inp");
+    cin >> n >> m;
 
-    //Write your input-generating code here
-}
-void Generate_answer()
-{
-    ifstream test_inp(task".inp");
-    ofstream test_ans(task".ans");
+    adj = vvii(n+1);
 
-    //Write your answer-generating code here
-}
-
-//==================================================
-//Checker
-void Checker()
-{
-    int T;
-    cout << "How many fukking tests do you want to generate? Enter your value here: "; cin >> T;
-
-    FOR(iTest, 1, T)
+    FOR(i, 1, m)
     {
-        cout << "Test #" << iTest << ":\n";
-
-
-        Generate_input();
-        cout << "Input generating completed\n";
-
-
-        timeStart = chrono::steady_clock::now();
-        Generate_answer();
-        timeEnd   = chrono::steady_clock::now();
-        cout << "Answer generating completed with elapsed time: " << chrono::duration<double>(timeEnd - timeStart).count() << " second(s)" << el;
-
-
-        timeStart = chrono::steady_clock::now();
-        system(task);
-        timeEnd   = chrono::steady_clock::now();
-        cout << "Sample program completed with elapsed time: " << chrono::duration<double>(timeEnd - timeStart).count() << " second(s)" << el;
-
-        int ec = 1 - system("fc "task".out "task".ans");
-        puts((ec == 1) ? "Correct" : "Incorrect");
-        score += ec;
+        int u, v, c;
+        cin >> u >> v >> c;
+        adj[u].pb(ii(c, v));
+        adj[v].pb(ii(c, u));
     }
 
+    cin >> s >> t;
+}
 
-    printf("Tester finished with partial score: %d / %d\n", score, T);
-    printf("Nr. of Accepted tests:              %d / %d\n", score, T);
-    printf("Nr. of WA tests:                    %d / %d\n", T-score, T);
+
+//Dijkstra's Algorithm
+const int inf = 1000000007;
+void Dijkstra(int start)
+{
+    int u, v, du, uv;
+    priority_queue<ii, vii, greater<ii>> pq;
+
+    dist = vi(n+1, inf);
+    dist[start] = 0;
+    pq.push(ii(0, start));
+
+    while(!pq.empty())
+    {
+        u = pq.top().second;
+        du = pq.top().first;
+        pq.pop();
+
+        if(du != dist[u]) continue;
+
+        for(auto x: adj[u])
+        {
+            v = x.second;
+            uv = x.first;
+
+            if(dist[u] + uv < dist[v])
+            {
+                pq.push(ii((dist[v] = dist[u] + uv), v));
+            }
+        }
+    }
+}
+
+//Process
+void Solve()
+{
+    Dijkstra(s);
+    cout << dist[t] << el;
 }
 
 
 //Main Procedure
 int main()
 {
-    Checker();
+    Enter();
+    Solve();
     return 0;
 }
 

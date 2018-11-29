@@ -1,4 +1,3 @@
-///                       Test Generator v1.1 by bu1th4nh                        ///
 /*==========================================================================================*\
 **                        _           _ _   _     _  _         _                            **
 **                       | |__  _   _/ | |_| |__ | || |  _ __ | |__                         **
@@ -6,6 +5,23 @@
 **                       | |_) | |_| | | |_| | | |__   _| | | | | | |                       **
 **                       |_.__/ \__,_|_|\__|_| |_|  |_| |_| |_|_| |_|                       **
 \*==========================================================================================*/
+//=====================================
+/* Briefing - Convex Hull Optimization
+
+        * Original Recurrence:
+            dp[i] = min( dp[j] + b[j]*a[i] )  for j < i
+        * Condition:
+            b[j] >= b[j+1]
+            a[i] <= a[i+1]
+        * Usage:
+            ConvexHullDS hull;
+            FOR(i,1,n)
+            {
+                dp[i] = hull.get(a[i]);
+                hull.add(b[i], dp[i]);
+            }
+*/
+//=====================================
 //Libraries and namespaces
 //#include <bits/stdc++.h>
 #include <algorithm>
@@ -34,12 +50,12 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <random>
-#include <chrono>
 #endif // __cplusplus
 
 using namespace std;
 
-#include "test_lib.h"
+// #define DEBUG
+// #define OPTIONAL_FEATURE
 
 //=====================================
 //Macroes
@@ -70,85 +86,87 @@ using namespace std;
     freopen(task".err", "w", stderr);   \
 }
 
+//Macroes - Optional
+#ifdef OPTIONAL_FEATURE
+    #define pc(x) putchar(x)
+    #define gc() getchar()
+#endif
+
 //=====================================
-//Typedefs
-typedef long long ll;
-typedef unsigned long long ull;
-typedef pair<int, int> ii;
-typedef vector<bool> vb;
-typedef vector<int> vi;
-typedef vector<ii> vii;
-typedef vector<vi> vvi;
-typedef vector<vb> vvb;
-typedef vector<vii> vvii;
-int score = 0;
+/* Overview - Implementation for Convex Hull Trick
 
-
-auto timeStart = chrono::steady_clock::now();
-auto timeEnd   = chrono::steady_clock::now();
-
-
-//==================================================
-//Input and answer generating procedures
-void Generate_input()
+        *Source: https://github.com/ngthanhtrung23/ACM_Notebook_new/blob/master/DP/convex_hull.h
+        *Author: RR - Thanh Trung Nguyen - @ngthanhtrung23 (GitHub), forked by me
+        *Status: tested on NKLEAVES and some Codeforces problem
+        *Date: 2018/09/15
+*/
+//=====================================
+//CHT Class
+struct ConvexHullDS
 {
-    ofstream test_inp(task".inp");
+    typedef double ld;
+    typedef long long ll;
+    typedef vector<int> vi;
+    typedef vector<ld> vld;
+    typedef vector<ll> vll;
+    typedef vector<vld> vvld;
+    typedef vector<vll> vvll;
 
-    //Write your input-generating code here
-}
-void Generate_answer()
-{
-    ifstream test_inp(task".inp");
-    ofstream test_ans(task".ans");
 
-    //Write your answer-generating code here
-}
+    vi head, tail;
+    vvll a, b;
+    vvld x;
 
-//==================================================
-//Checker
-void Checker()
-{
-    int T;
-    cout << "How many fukking tests do you want to generate? Enter your value here: "; cin >> T;
 
-    FOR(iTest, 1, T)
+    ll query(int id, ll x_query)
     {
-        cout << "Test #" << iTest << ":\n";
+        int& he = head[id];
+        int& ta = tail[id];
+
+        if(he > ta) return 0LL;
+
+        while(he < ta && x[id][he+1] <= x_query) he++;
+        x[id][he] = x_query;
 
 
-        Generate_input();
-        cout << "Input generating completed\n";
+        //cerr << "Returned: " << 1LL * a[id][he] * x_query + b[id][he] << el;
+
+        return 1LL * a[id][he] * x_query + b[id][he];
+    }
+    void update(int id, ll new_a, ll new_b)
+    {
+        int& he = head[id];
+        int& ta = tail[id];
 
 
-        timeStart = chrono::steady_clock::now();
-        Generate_answer();
-        timeEnd   = chrono::steady_clock::now();
-        cout << "Answer generating completed with elapsed time: " << chrono::duration<double>(timeEnd - timeStart).count() << " second(s)" << el;
+        ld new_x = -1e18;
+        while(he <= ta)
+        {
+            if( new_a == a[id][ta] ) return;
 
+            new_x = 1.0 * (b[id][ta] - new_b) / (new_a - a[id][ta]);
+            if(he == ta || new_x >= x[id][ta]) break;
 
-        timeStart = chrono::steady_clock::now();
-        system(task);
-        timeEnd   = chrono::steady_clock::now();
-        cout << "Sample program completed with elapsed time: " << chrono::duration<double>(timeEnd - timeStart).count() << " second(s)" << el;
+            ta--;
+        }
 
-        int ec = 1 - system("fc "task".out "task".ans");
-        puts((ec == 1) ? "Correct" : "Incorrect");
-        score += ec;
+        a[id][++ta] = new_a;
+        b[id][ ta ] = new_b;
+        x[id][ ta ] = new_x;
+
+        //cerr << "Added: " << new_a << sp << new_b << sp << new_x << el;
     }
 
 
-    printf("Tester finished with partial score: %d / %d\n", score, T);
-    printf("Nr. of Accepted tests:              %d / %d\n", score, T);
-    printf("Nr. of WA tests:                    %d / %d\n", T-score, T);
-}
+    ConvexHullDS()
+    {
+        head = vi(16, 1);
+        tail = vi(16, 0);
+        a = b = vvll(16, vll(131073, 0LL));
+        x = vvld(16, vld(131073, 0.00000));
+    }
+};
 
-
-//Main Procedure
-int main()
-{
-    Checker();
-    return 0;
-}
 
 //=============================================================================//
 /**    CTB, you are always in my heart and in my code <3       #30yearsCTB    **/

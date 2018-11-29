@@ -1,58 +1,79 @@
-/***********************************************************************************/
-/**                                                                               **/
-/**                     BIG INTEGER CLASS v1.1.10423                              **/
-/**             Copyright(c) 2017 by bu1th4nh - I.T 16-19 CTB                     **/
-/**                                                                               **/
-/**                    E-mail: bu1th4nh.127@gmail.com                             **/
-/**                                                                               **/
-/**       This program is free software; you can redistribute it and/or           **/
-/**        modify it under the terms of the GNU General Public License            **/
-/**      as published by the Free Software Foundation; either version 2           **/
-/**        of the License, or (at your option) any later version.                 **/
-/**                                                                               **/
-/**       This program is distributed in the hope that it will be useful,         **/
-/**        but WITHOUT ANY WARRANTY; without even the implied warranty of         **/
-/**         MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         **/
-/**                GNU General Public License for more details.                   **/
-/**                                                                               **/
-/**    You should have received a copy of the GNU General Public License          **/
-/**      along with this program; if not, write to the Free Software              **/
-/**   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. **/
-/**                                                                               **/
-/***********************************************************************************/
-
+/*==========================================================================================*\
+**                        _           _ _   _     _  _         _                            **
+**                       | |__  _   _/ | |_| |__ | || |  _ __ | |__                         **
+**                       | '_ \| | | | | __| '_ \| || |_| '_ \| '_ \                        **
+**                       | |_) | |_| | | |_| | | |__   _| | | | | | |                       **
+**                       |_.__/ \__,_|_|\__|_| |_|  |_| |_| |_|_| |_|                       **
+\*==========================================================================================*/
+//=====================================
+/*Briefing - Big Integer
+        Big Integer, built on strings.
+*/
+//=====================================
 //Libraries and namespaces
 //#include <bits/stdc++.h>
 #include <algorithm>
+#include <bitset>
 #include <cmath>
+#include <complex>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <cassert>
 #include <fstream>
+#include <functional>
 #include <iostream>
 #include <iomanip>
+#include <map>
 #include <queue>
+#include <set>
+#include <sstream>
 #include <stack>
 #include <string>
+#include <tuple>
 #include <vector>
 #include <utility>
+
+#if __cplusplus >= 201103L
+#include <unordered_map>
+#include <unordered_set>
+#include <random>
+#endif // __cplusplus
+
 using namespace std;
 
+// #define DEBUG 
+// #define OPTIONAL_FEATURE
 
 //=====================================
-//Macros
+//Macroes
+#define sp ' '
+#define el '\n'
 #define task ""
-#define maxvalueinp (int)()
-#define MODUL (int)(1e9+57)
+#define maxinp ()
+#define fi first
+#define se second
+#define pb push_back
 #define len(x) (int)(x.length())
-#define siz(x) (int)(x.size())
-#define whole(x) x.begin(), x.end()
-#define FOR(i, x, y) for(int i=x; i<=y; ++i)
-#define FORl(i, x, y) for(int i=x; i<y; ++i)
-#define FORb(i, x, y) for(int i=x; i>=y; --i)
-#define FORlb(i, x, y) for(int i=x; i>y; --i)
+#define whole(x) x.begin(),x.end()
+#define whole_1(x) x.begin()+1,x.end()
+#define r_whole(x) x.rbegin(),x.rend()
+#define FOR(i, x, y) for(auto i=x; i<=y; ++i)
+#define FORl(i, x, y) for(auto i=x; i<y; ++i)
+#define FORb(i, x, y) for(auto i=x; i>=y; --i)
+#define FORlb(i, x, y) for(auto i=x; i>y; --i)
 #define MEMS(x, val) memset(x, val, sizeof(x))
-#define FILEOP(x) freopen(x".inp", "r", stdin); freopen(x".out", "w", stdout);
+#define FILEOP()                        \
+{                                       \
+    freopen(task".inp", "r", stdin);    \
+    freopen(task".out", "w", stdout);   \
+}
+#define FILEOP_DEBUG()                  \
+{                                       \
+    freopen(task".inp", "r", stdin);    \
+    freopen(task".out", "w", stdout);   \
+    freopen(task".err", "w", stderr);   \
+}
 
 //=====================================
 //Typedef

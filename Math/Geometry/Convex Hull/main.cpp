@@ -5,6 +5,15 @@
 **                       | |_) | |_| | | |_| | | |__   _| | | | | | |                       **
 **                       |_.__/ \__,_|_|\__|_| |_|  |_| |_| |_|_| |_|                       **
 \*==========================================================================================*/
+//=====================================
+//Briefing
+/*
+    This is an implementation for finding convex hull in 2D plane
+
+    * Status: tested
+    * Author: bu1th4nh
+*/
+//=====================================
 //Libraries and namespaces
 //#include <bits/stdc++.h>
 #include <algorithm>

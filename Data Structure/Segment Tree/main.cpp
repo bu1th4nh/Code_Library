@@ -5,6 +5,12 @@
 **                       | |_) | |_| | | |_| | | |__   _| | | | | | |                       **
 **                       |_.__/ \__,_|_|\__|_| |_|  |_| |_| |_|_| |_|                       **
 \*==========================================================================================*/
+//=====================================
+//Briefing
+/*
+    This is an implementation for Segment Tree, or Interval Tree, both non-lazy and lazy version
+*/
+//=====================================
 //Libraries and namespaces
 //#include <bits/stdc++.h>
 #include <algorithm>
@@ -47,9 +53,13 @@ using namespace std;
 #define MEMS(x, val) memset(x, val, sizeof(x))
 #define FILEOP() {freopen(task".inp", "r", stdin); freopen(task".out", "w", stdout);}
 
-
 //=====================================
-//Typedef
+//Overview - Non-lazy Segment Tree implementation
+/*  
+    * Author : bu1th4nh.
+    * Status : tested on many problems.
+*/
+//=====================================
 //Segment Tree without Lazy Propagation, PU/RQ/Min-Max-Sum Query
 template<class T> struct SegmentTree
 {
@@ -113,7 +123,13 @@ template<class T> struct SegmentTree
     ~SegmentTree() {}
 };
 
-
+//=====================================
+//Overview - Lazy version of Segment Tree implementation
+/*  
+    * Author : bu1th4nh.
+    * Status : tested on many problems.
+*/
+//=====================================
 //Segment Tree w/ Lazy Propagation, RU/RQ/Min-Max-Sum Query
 template<class T> struct SegmentTreeWithLP
 {
