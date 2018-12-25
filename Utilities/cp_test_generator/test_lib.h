@@ -1,4 +1,4 @@
-///                       Test Generating Library v1.1 by bu1th4nh                       ///
+///                       Test Generating Library v1.11 by bu1th4nh                       ///
 /*==========================================================================================*\
 **                        _           _ _   _     _  _         _                            **
 **                       | |__  _   _/ | |_| |__ | || |  _ __ | |__                         **
@@ -92,7 +92,7 @@ mt19937_64 GEN(chrono::steady_clock::now().time_since_epoch().count());
 
 //=====================================
 //Generating Utilities
-template<class R, class T> T rand_int(R start, T limit, int SIGN_SETTING = 0)
+template<class R, class T> T rand_int(R __s, T __l, int SIGN_SETTING = 0)
 {
 
     /*
@@ -102,10 +102,11 @@ template<class R, class T> T rand_int(R start, T limit, int SIGN_SETTING = 0)
                 1: Use both positive and negative integers
     */
 
-
+    T start = T(__s);
+    T limit = T(__l);
     if(start > limit) swap(start, limit);
     uniform_int_distribution<int> pos(0, 1);
-    uniform_int_distribution<T> die((T)start, (T)limit);
+    uniform_int_distribution<T> die(start, limit);
 
     switch (SIGN_SETTING)
     {

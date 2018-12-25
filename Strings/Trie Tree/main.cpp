@@ -86,8 +86,12 @@ using namespace std;
 
 //=====================================
 //Trie Tree
-template<int MAX_CHARACTER> struct Trie
+namespace Trie
 {
+    const int MAX_CHARACTER = 311;
+    const int CHR_BEGIN     = 'A';
+    const int CHR_END       = 'Z';
+
     struct Node
     {
         Node* parent;
@@ -100,7 +104,7 @@ template<int MAX_CHARACTER> struct Trie
     {
         Node* ret = new Node;
 
-        FORl(i, 0, MAX_CHARACTER) ret->child[i] = NULL;
+        FORl(i, CHR_BEGIN, CHR_END) ret->child[i] = NULL;
         ret->parent = NULL;
         ret->isLeaf = 0;
 
@@ -136,12 +140,12 @@ template<int MAX_CHARACTER> struct Trie
         //
     }
 
-    Trie()
+    void initialize()
     {
         root = newNode();
     }
 };
-
+using namespace Trie;
 
 //=====================================
 //Driver Programs
@@ -150,18 +154,18 @@ void Driver()
     //Driver Problem: Given n word and m query. Each query: Find a word w.
     int n, m;
     string s;
-    Trie<256> trie;
+    initialize();
 
     cin >> n >> m;
     FOR(i, 1, n)
     {
         cin >> s;
-        trie.insert(s);
+        insert(s);
     }
     FOR(i, 1, m)
     {
         cin >> s;
-        puts(trie.find(s) ? "true" : "false");
+        puts(find(s) ? "true" : "false");
     }
 }
 

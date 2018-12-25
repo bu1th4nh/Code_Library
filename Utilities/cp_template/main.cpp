@@ -44,8 +44,8 @@
 
 using namespace std;
 
-// #define DEBUG 
-// #define OPTIONAL_FEATURE
+//#define DEBUG
+#define OPTIONAL_FEATURE
 
 //=====================================
 //Macroes
@@ -87,35 +87,43 @@ using namespace std;
 //=====================================
 //Auxilary Functions and Fast I/O
 #ifdef OPTIONAL_FEATURE
-    template<class T, class R> T max(T &x, R &y)
+    template<class T, class R> T max(const T &__X, const R &__Y)
     {
-        return x > y ? x : y;
-    }    
-    template<class T, class R> T min(T &x, R &y)
-    {
-        return x < y ? x : y;
+        return __X > __Y ? __X : __Y;
     }
-    template<class T, class R> void maximize(T &x, R y)
+    template<class T, class R> T min(const T &__X, const R &__Y)
     {
-        x = x > y ? x : y;
-    }    
-    template<class T, class R> void minimize(T &x, R y)
-    {
-        x = x < y ? x : y;
+        return __X < __Y ? __X : __Y;
     }
-    template<class T> int getBit(T &x, int i)
+    template<class T, class R> void maximize(T &__X, R __Y)
     {
-        return ((x >> i) & 1) == 1;
+        __X = __X > __Y ? __X : __Y;
     }
-    template<class T> T __abs(T &x)
+    template<class T, class R> void minimize(T &__X, R __Y)
     {
-        return (x = (x < 0) ? -x : x);
+        __X = __X < __Y ? __X : __Y;
+    }
+    template<class T> int getBit(T &__X, int __i)
+    {
+        return ((__X >> __i) & 1) == 1;
+    }
+    template<class T> bool inRange(T __L, T __R, T __X)
+    {
+        return __L <= __X && __X <= __R;
+    }
+    template<class T> T __abs(T __X)
+    {
+        return (__X < 0) ? -__X : __X;
+    }
+    template<class T> T __sqr(T __X)
+    {
+        return __X * __X;
     }
 #endif
 //Fast I/O
-template<class T> inline void read(T &ret)
+template<class T> inline void scan(T &__ret)
 {
-    ret = T();
+    __ret = T();
     char c = 0;
     bool neg = 0;
 
@@ -126,23 +134,19 @@ template<class T> inline void read(T &ret)
         c = getchar();
     }
 
-    for(; isdigit(c) != 0; c = getchar()) ret = ret * 10 + c - '0';
-    ret = (neg) ? -ret : ret;
-
-    #ifdef DEBUG
-        cerr << "FastScan Diagnostic: " << ret << el;
-    #endif
+    for(; isdigit(c) != 0; c = getchar()) __ret = __ret * 10 + c - '0';
+    __ret = (neg) ? -__ret : __ret;
 }
-template<class T> void print(T x)
+template<class T> void print(T __X)
 {
-    if(x < 0)
+    if(__X < 0)
     {
         putchar('-');
-        x *= -1;
+        __X *= -1;
     }
 
-    if(x > 9) print(x / 10);
-    putchar(x % 10 + '0');
+    if(__X > 9) print(__X / 10);
+    putchar(__X % 10 + '0');
 }
 
 //=====================================
