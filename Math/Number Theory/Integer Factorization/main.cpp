@@ -6,10 +6,10 @@
 **                       |_.__/ \__,_|_|\__|_| |_|  |_| |_| |_|_| |_|                       **
 \*==========================================================================================*/
 //=====================================
-//Solution Briefing - Foreword
-
-
-
+//Briefing
+/*
+    This is an implementation for integer factorization
+*/
 //=====================================
 //Libraries and namespaces
 //#include <bits/stdc++.h>
@@ -45,7 +45,7 @@
 using namespace std;
 
 //#define DEBUG
-#define OPTIONAL_FEATURE
+//#define OPTIONAL_FEATURE
 
 //=====================================
 //Macroes
@@ -64,7 +64,6 @@ using namespace std;
 #define FORb(i, x, y) for(auto i=x; i>=y; --i)
 #define FORlb(i, x, y) for(auto i=x; i>y; --i)
 #define MEMS(x, val) memset(x, val, sizeof(x))
-#define what_is(x) cerr << #x << " is " << x << endl;
 #define FILEOP()                        \
 {                                       \
     freopen(task".inp", "r", stdin);    \
@@ -77,147 +76,82 @@ using namespace std;
     freopen(task".err", "w", stderr);   \
 }
 
-//Macroes - Optional
-#ifdef OPTIONAL_FEATURE
-    #define pc(x) putchar(x)
-    #define gc() getchar()
-#endif
-
-
-
-//=====================================
-//Auxilary Functions and Fast I/O
-#ifdef OPTIONAL_FEATURE
-    template<class T, class R> T max(const T &__X, const R &__Y)
-    {
-        return __X > __Y ? __X : __Y;
-    }
-    template<class T, class R> T min(const T &__X, const R &__Y)
-    {
-        return __X < __Y ? __X : __Y;
-    }
-    template<class T, class R> void maximize(T &__X, R __Y)
-    {
-        __X = __X > __Y ? __X : __Y;
-    }
-    template<class T, class R> void minimize(T &__X, R __Y)
-    {
-        __X = __X < __Y ? __X : __Y;
-    }
-    template<class T> int getBit(T &__X, int __i)
-    {
-        return ((__X >> __i) & 1) == 1;
-    }
-    template<class T> bool inRange(T __L, T __R, T __X)
-    {
-        return __L <= __X && __X <= __R;
-    }
-    template<class T> T __abs(T __X)
-    {
-        return (__X < 0) ? -__X : __X;
-    }
-    template<class T> T __sqr(T __X)
-    {
-        return __X * __X;
-    }
-#endif
-//Fast I/O
-template<class T> inline void scan(T &__ret)
-{
-    __ret = T();
-    char c = 0;
-    bool neg = 0;
-
-    while(isdigit(c) == 0 && c != '-') c = getchar();
-    if(c == '-')
-    {
-        neg = 1;
-        c = getchar();
-    }
-
-    for(; isdigit(c) != 0; c = getchar()) __ret = __ret * 10 + c - '0';
-    __ret = (neg) ? -__ret : __ret;
-}
-template<class T> void print(T __X)
-{
-    if(__X < 0)
-    {
-        putchar('-');
-        __X *= -1;
-    }
-
-    if(__X > 9) print(__X / 10);
-    putchar(__X % 10 + '0');
-}
-
-//=====================================
-//Constants
-
-
 
 //=====================================
 //Typedefs
 typedef long long ll;
 typedef unsigned long long ull;
 typedef pair<int, int> ii;
-typedef vector<bool> vb;
 typedef vector<int> vi;
 typedef vector<ii> vii;
-typedef vector<vi> vvi;
-typedef vector<vb> vvb;
-typedef vector<vii> vvii;
-
 
 
 //=====================================
-//Functions and procedures
-//File I/O and utilities
-void FileInit()
+//Overview - integer factorization implementation
+/*  
+    * Author : VNOI Wiki, modified by bu1th4nh.
+    * Status : tested on many problems.
+*/
+//=====================================
+//Naive Approach - O(sqrt(N)) per query
+template<class T> map<T, int> NaiveFactorization(T n)
 {
-    FILEOP()
-}
-void FileDebug()
-{
-    #ifdef DEBUG
-        FILEOP_DEBUG()
-    #else
-        FILEOP()
-    #endif
-}
-void FileClose()
-{
-    fclose(stdin);
-    fclose(stdout);
-}
-
-
-//Enter
-void Enter()
-{
-	//Enter value
+    map<T, int> mp;
+    for(int i = 2; i * i <= n; ++i) while(n % i == 0)
+    {
+        ++mp[i];
+        n /= i;
+    }
+    if(n != 1) mp[n] = 1;
+    return mp;
 }
 
-//Check
 
+//=====================================
+//O(logN) Approach, needs pre-processing
+const int MAX_N = 1e6;
+vi minPrime;
+void Preps()
+{
+    minPrime = vi(MAX_N+10, 0);
+    for(int i = 2; i * i <= MAX_N; ++i) if(!minPrime[i])
+    {
+        for(int j = i * i; j <= MAX_N; j += i)
+        {
+            if(!minPrime[j]) minPrime[j] = i;
+        }
+    }
+    for(int i = 2; i <= MAX_N; ++i) if(!minPrime[i]) minPrime[i] = i;
+}
+template<class T> map<T, int> LogNFactorization(T n)   //call Prep() first
+{
+    map<T, int> mp;
+    while(n != 1)
+    {
+        ++mp[minPrime[n]];
+        n /= minPrime[n];
+    }
+    return mp;
+}
 
-
-
-//Process
-
-
-
-
-
-//Output
-
-
-
-
-
-//Main Procedure
+//=====================================
+//Driver Program
 int main()
 {
-    //Your code goes here
+    int x;
+    cerr << "Please enter x = ";
+    cin >> x;
+
+    cerr << "Naive factorization of " << x << ": \n";
+    map<int, int> a = NaiveFactorization(x);
+    for(ii x: a) cout << x.fi << " ^ " << x.se << el;
+    cerr << el;
+
+    Preps();
+    cerr << "LogN factorization of " << x << ": \n";
+    a = LogNFactorization(x);
+    for(ii x: a) cout << x.fi << " ^ " << x.se << el;
+    cerr << el;
     return 0;
 }
 

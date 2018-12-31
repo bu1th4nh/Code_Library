@@ -58,6 +58,7 @@ using namespace std;
 #define FORb(i, x, y) for(auto i=x; i>=y; --i)
 #define FORlb(i, x, y) for(auto i=x; i>y; --i)
 #define MEMS(x, val) memset(x, val, sizeof(x))
+#define what_is(x) cerr << #x << " is " << x << endl;
 #define FILEOP()                        \
 {                                       \
     freopen(task".inp", "r", stdin);    \
