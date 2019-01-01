@@ -130,8 +130,8 @@ template<class T> struct SegmentTree
     * Status : tested on many problems.
 */
 //=====================================
-//Segment Tree w/ Lazy Propagation, RU/RQ/Min-Max-Sum Query
-template<class T> struct SegmentTreeWithLP
+//Segment Tree w/ Lazy Propagation, RU/RQ/Min-Max Query
+template<class T> struct LazySegmentTree
 {
     #define lc id*2
     #define rc id*2+1
@@ -193,12 +193,88 @@ template<class T> struct SegmentTreeWithLP
 
 
     //Constructors and destructor
-    SegmentTreeWithLP() {}
-    SegmentTreeWithLP(int __n) {ST = vector<Node>(4*__n+16);}
+    LazySegmentTree() {}
+    LazySegmentTree(int __n) {ST = vector<Node>(4*__n+16);}
 
-    ~SegmentTreeWithLP() {ST.clear();}
+    ~LazySegmentTree() {ST.clear();}
 
 };
+
+
+
+//=====================================
+//Overview - Lazy + Sum version of Segment Tree implementation
+/*  
+    * Author : bu1th4nh.
+    * Status : tested on problem GRASSPLA on SPOJ.
+*/
+//=====================================
+//Segment Tree w/ Lazy Propagation and Sum Query
+template<class T> class LazySumSegmentTree
+{
+private:
+
+    #define lc id*2
+    #define rc id*2+1
+    struct Node
+    {
+        T val, lazy;
+        Node(): val(T()), lazy(T()) {}
+        Node(T __v): val(__v), lazy(0) {}
+        Node(T __v, T __l): val(__v), lazy(__l) {}
+    };
+    typedef vector<Node> vn;
+
+    vn ST;
+    void push_down(int id, T value)
+    {
+        ST[lc].lazy += value;
+        ST[rc].lazy += value;
+    }
+    void increase(int id, int l, int r, T value)
+    {
+        ST[id].val += (r - l + 1) * value;
+        if(l != r) push_down(id, value);
+        ST[id].lazy = T();
+    }
+
+
+public:
+
+    void update(int id, int l, int r, int ql, int qr, T value)
+    {
+        if(ST[id].lazy) increase(id, l, r, ST[id].lazy);
+        if(r  <  l || qr < l || r < ql) return;
+        if(ql <= l && r  <= qr)
+        {
+            increase(id, l, r, value);
+            return;
+        }
+
+        int mid = (l + r) / 2;
+        update(lc, l, mid, ql, qr, value);
+        update(rc, mid+1, r, ql, qr, value);
+        ST[id].val = ST[lc].val + ST[rc].val;
+    }
+    T query(int id, int l, int r, int ql, int qr)
+    {
+        if(r < l || qr < l || r < ql) return T();
+        if(ST[id].lazy) increase(id, l, r, ST[id].lazy);
+        if(ql <= l && r <= qr) return ST[id].val;
+
+        int mid = (l + r) / 2;
+        return query(lc, l, mid, ql, qr) + query(rc, mid+1, r, ql, qr);
+    }
+
+
+    LazySumSegmentTree() {}
+    LazySumSegmentTree(int __n)
+    {
+        ST = vn(4*__n+100);
+    }
+
+};
+
 
 
 //=====================================
@@ -288,7 +364,7 @@ void QMAX2()
 
 
     scanf("%d%d", &n, &m);
-    SegmentTreeWithLP<int> st(n);
+    LazySegmentTree<int> st(n);
 
     while(m--)
     {
