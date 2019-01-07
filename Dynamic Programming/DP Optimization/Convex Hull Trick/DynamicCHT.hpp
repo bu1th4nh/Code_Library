@@ -8,17 +8,15 @@
 //=====================================
 /* Briefing - Convex Hull Optimization
 
-        * Original Recurrence:
-            dp[i] = min( dp[j] + b[j]*a[i] )  for j < i
-        * Condition:
-            b[j] >= b[j+1]
-            a[i] <= a[i+1]
+        * Original Recurrence: Find max y = a * x + b.
         * Usage:
-            ConvexHullDS hull;
+            using namespace __dp__line_container;
+
+            LineContainer lcon;
             FOR(i,1,n)
             {
-                dp[i] = hull.get(a[i]);
-                hull.add(b[i], dp[i]);
+                hull.add(a[i-1], b[i-1]);
+                dp[i] = lcon.query(x[i]);
             }
 */
 //=====================================
@@ -93,68 +91,73 @@ using namespace std;
 #endif
 
 //=====================================
-/* Overview - Implementation for Convex Hull Trick
+/* Overview - Implementation for Dynamic Line Container (or Dynamic CHT/CHO)
 
-        *Source: https://github.com/ngthanhtrung23/ACM_Notebook_new/blob/master/DP/convex_hull.h
-        *Author: RR - Thanh Trung Nguyen - @ngthanhtrung23 (GitHub), forked by me
-        *Status: tested on NKLEAVES and some Codeforces problem
-        *Date: 2018/09/15
+        *Source: https://github.com/kth-competitive-programming/kactl/blob/master/content/data-structures/LineContainer.h
+        *Author: Simon Lindholm @ KTH-CP, KTH ACM Contest Library, forked by me
+        *Status: tested on Codeforces problem 660F
+        *Date: 2019/01/05
 */
 //=====================================
-//CHT Class
-template<class T> class ConvexHullOpt
+//Dynamic CHT Namespace
+namespace __dp__line_container
 {
-private:
-    typedef long double ld;
-    typedef deque<ld> dqld;
-    typedef deque<T> dqt;
+    typedef long long ll;
 
-    dqt a, b;
-    dqld x;
+    const ll inf = 100000000000000000LL;
+    bool isQuery = 0;
 
-    void pop_front()
+    struct Line
     {
-        assert(!a.empty()); a.pop_front();
-        assert(!b.empty()); b.pop_front();
-        assert(!x.empty()); x.pop_front();
-    }
-    void pop_back()
-    {
-        assert(!a.empty()); a.pop_back();
-        assert(!b.empty()); b.pop_back();
-        assert(!x.empty()); x.pop_back();
-    }
+        mutable ll a, b, p;
 
-public:
-    T query(T x_query)
-    {
-        if(x.empty()) return T();
-
-        while(x.size() > 1 && x[1] <= x_query) pop_front();
-        x[0] = x_query;
-
-        return a.front() * x_query + b.front();
-    }
-    void update(T new_a, T new_b)
-    {
-        ld new_x = -1e18;
-        while(!x.empty())
+        bool operator< (const Line &other) const
         {
-            if(new_a == a.back()) return;
-
-            new_x = 1.0 * (b.back() - new_b) / (new_a - a.back());
-            if(x.size() == 1 || new_x >= x.back()) break;
-
-            pop_back();
+            return isQuery ? (this->p < other.p) : (this->a < other.a);
         }
-        a.push_back(new_a);
-        b.push_back(new_b);
-        x.push_back(new_x);
-    }
 
-    ConvexHullOpt() {}
-};
+        Line(ll a, ll b, ll p): a(a), b(b), p(p) {}
+        Line() {}
+    };
+    struct LineContainer : multiset<Line, less<Line>>
+    {
+        ll div(ll a, ll b)
+        {
+            return a / b - ((a ^ b) < 0 && a % b);
+        }
+        bool isect(iterator x, iterator y)
+        {
+            if(y == end()) {
+                x->p = inf;
+                return 0;
+            }
 
+            x->p =  (x->a == y->a) ? ((x->b > y->b) ?  inf : -inf)
+                                   : div(y->b - x->b, x->a - y->a);
+            return x->p >= y->p;
+        }
+        void add(ll a, ll b)
+        {
+            auto z = emplace(a, b, 0), y = z++, x = y;
+
+            while(isect(y, z)) z = erase(z);
+            if(x != begin() && isect(--x, y)) isect(x, y = erase(y));
+
+            while((y = x) != begin() && (--x)->p >= y->p) isect(x, erase(y));
+        }
+        ll query(ll x)
+        {
+            assert(!empty());
+
+            isQuery = 1;
+            auto l = *lower_bound(Line(0, 0, x));
+            isQuery = 0;
+
+            return l.a * x + l.b;
+        }
+    };
+}
+using namespace __dp__line_container;
 
 
 //=============================================================================//
