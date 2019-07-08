@@ -85,7 +85,7 @@ using namespace std;
 
 //=====================================
 //Overview - 2D Geometry Namespace
-/*  
+/*
     * Author : bu1th4nh.
     * Status : tested on problem MILITARY-SPOJ.
     * Source : Thầy Lê Minh Hoàng - (Convex Hull), GeeksForGeeks - (doIntersect) and more.
@@ -154,6 +154,15 @@ namespace Geometry
         return inRange(min(A.x, B.x), max(A.x, B.x), M.x) &&
                inRange(min(A.y, B.y), max(A.y, B.y), M.y) &&
                orient(A, B, M) == 0;
+    }
+    ll findDoubledArea(const vpt &polygon)
+    {
+        /**< \brief Return the area of ordered polygon, assumed polygon[0] == polygon.back() */
+
+        ll ret = 0LL;
+        int n = polygon.size()-1;
+        FORl(i, 0, n) ret += polygon[i].x * polygon[i+1].y - polygon[i+1].x * polygon[i].y;
+        return ret;
     }
 
 //==========================================================//
