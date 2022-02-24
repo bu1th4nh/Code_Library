@@ -8,10 +8,10 @@
 //=====================================
 //Briefing
 /*
-    This is the implementation for finding Maximum Matching in unweighted Biparttite Graph 
-    using Augmenting Path Algorithm
+    This is the implementation for finding Maximum Matching in unweighted Biparttite Graph
+    using traditional Augmenting Path Algorithm
 
-    * Status: tested
+    * Status: tested, with OOP
     * Author: bu1th4nh
 */
 //=====================================
@@ -38,98 +38,121 @@
 #include <utility>
 using namespace std;
 
-
 //=====================================
-//Macros
-#define task ""
-#define fi first
-#define se second
-#define pb push_back
-#define maxinp (int)()
-#define siz(x) (int)(x.size())
-#define len(x) (int)(x.length())
-#define whole(x) x.begin(), x.end()
-#define FOR(i, x, y) for(int i=x; i<=y; ++i)
-#define FORl(i, x, y) for(int i=x; i<y; ++i)
-#define FORb(i, x, y) for(int i=x; i>=y; --i)
-#define FORlb(i, x, y) for(int i=x; i>y; --i)
-#define MEMS(x, val) memset(x, val, sizeof(x))
-#define FILEOP() {freopen(task".inp", "r", stdin); freopen(task".out", "w", stdout);}
-
-
-//=====================================
-//Typedef
-typedef long long ll;
-typedef unsigned long long ull;
-typedef pair<int, int> ii;
-typedef vector<bool> vb;
-typedef vector<int> vi;
-typedef vector<ii> vii;
-typedef vector<vi> vvi;
-typedef vector<vb> vvb;
-typedef vector<vii> vvii;
-int assigned[128], visited[128];
-int n, m, t = 0;
-vi adj[128];
-
-//=====================================
-//Functions and procedures
-//Initialization and preparation
-void FileInit()
+//OOP Version
+class TraditionalMatching
 {
-    FILEOP()
-}
-void FileClose()
-{
-    fclose(stdin);
-    fclose(stdout);
-}
+    #define FOR(i, x, y) for(int i=x; i<=y; ++i)
 
+    vector<int> assigned;
+    vector<int> visited;
+    vector<pair<int, int>> match_result;
+    vector<vector<int>> adj;
+    int m, n, nMatch;
+
+
+    bool FindAP(int u, int t)
+    {
+        /** \brief Thủ tục DFS tìm đường tăng trưởng tại đỉnh u và đỉnh khởi đầu là t
+         *  \param Đỉnh u, đỉnh khởi đầu t chưa được phủ bởi M
+         *  \return TRUE nếu tìm được đường tăng trưởng, FALSE nếu ngược lại
+         */
+
+        if(visited[u] != t) visited[u] = t;
+        else return false;
+
+        for(int v: adj[u])
+        {
+            if(!assigned[v] || FindAP(assigned[v], t))
+            {
+                assigned[v] = u;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+public:
+
+    void addEdge(int u, int v)
+    {
+        /** \brief Thêm cạnh vào đồ thị
+        *   \param u, v: Hai đỉnh của đồ thị
+        */
+
+        adj[u].push_back(v);
+    }
+    void initMatch()
+    {
+        /** \brief Tiến hành thuật toán
+         */
+        nMatch = 0;
+
+        FOR(i, 1, m)
+        {
+            nMatch += (int)FindAP(i, i);
+        }
+
+        FOR(i, 1, n)
+        {
+            if(int j = assigned[i]) match_result.emplace_back(j, i);
+        }
+
+    }
+    vector<pair<int, int>> extract_match_result()
+    {
+        /** \brief Trích xuất bộ ghép
+        */
+        return match_result;
+    }
+    int extract_match_qty()
+    {
+        /** \brief Trích xuất kích cỡ bộ ghép
+        */
+        return nMatch;
+    }
+
+
+    TraditionalMatching(int __nLeft, int __nRight)
+    {
+        m = __nLeft, n = __nRight;
+        assigned = vector<int>(n+1, 0);
+        visited = vector<int>(m+1, 0);
+        adj = vector<vector<int>>(m+1);
+    }
+    TraditionalMatching() {}
+};
+
+
+
+
+
+//=====================================End of algorithm=====================================================
 //Enter
+int m, n;
+TraditionalMatching match;
+
 void Enter()
 {
     int u, v;
 	scanf("%d%d", &m, &n);
+	match = TraditionalMatching(m, n);
 
-//	assigned = visited = vi(m+1);
-//	adj = vvi(m+1);
-
-	while(scanf("%d%d", &u, &v) == 2) adj[u].pb(v);
-}
-
-//Check
-bool FindAP(int u)
-{
-    if(visited[u] != t) visited[u] = t;
-    else return false;
-
-    for(int v: adj[u])
-    {
-        if(!assigned[v] || FindAP(assigned[v]))
-        {
-            assigned[v] = u;
-            return true;
-        }
-    }
-
-    return false;
+	while(scanf("%d%d", &u, &v) == 2) match.addEdge(u, v);
 }
 
 //Process
 void Solve()
 {
-    int res = 0;
-    FOR(i, 1, m)
-    {
-        t++;
-        res += FindAP(i);
-    }
+    match.initMatch();
 
-    cout << res << "\n";
+    cout << match.extract_match_qty() << "\n";
+    auto matches = match.extract_match_result();
 
-    FOR(i, 1, n)
+    for(auto edges: matches)
     {
-        if(int j = assigned[i]) printf("%d %d\n", j, i);
+        printf("%d %d\n", edges.first, edges.second);
     }
 }
 
