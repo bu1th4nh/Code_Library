@@ -109,7 +109,7 @@ private:
             do
             {
                 v = st.top(); st.pop();
-                num[u] = low[u] = 1234567890;
+                num[v] = low[v] = 1234567890;
                 tmp.push_back(v);
             }
             while(v != u);
