@@ -6,13 +6,11 @@
 % **                       |_.__/ \__,_|_|\__|_| |_|  |_| |_| |_|_| |_|                       **
 % \*==========================================================================================*/
 % 
-%   LaTeX HUST Project Template v2.04 by bu1th4nh. Copyright (c) 2022 bu1th4nh. All right reserved
+%   LaTeX HUST Project Template v2.05 by bu1th4nh. Copyright (c) 2022 bu1th4nh. All right reserved
 %   Author: @bu1th4nh (Bùi Tiến Thành)
 %   Date: 2022/05/05 15:47
 %   URL: https://github.com/bu1th4nh
 % 
-
-
 \documentclass[12pt,a4paper]{report}
 \usepackage[utf8]{vietnam} % Sử dụng tiếng việt
 \usepackage[top=3.5cm, bottom=3cm, left=3.5cm, right=2cm] {geometry} % Canh lề trang
@@ -36,16 +34,21 @@
 \usepackage{fancyhdr} % Cho phép tùy biến header và footer
 \usepackage{setspace}
 \usepackage{parskip}
-\usepackage[boxruled, lined]{algorithm2e} % Thêm mã giả
+\usepackage{booktabs}
+\usepackage[boxruled, 
+lined, 
+algochapter, 
+resetcount, 
+procnumbered, 
+linesnumbered]{algorithm2e} % Thêm mã giả
 
-
-
-
+% \usepackage{minted}
+\usepackage{float}
 
 
 \usepackage[nomath]{lmodern} % Chuyển font code cho Latex
-\usepackage{mathptmx}  % There's an impostor among us =)))
-
+\usepackage{mathptmx} % Thay font cho math mode của Latex
+\newcolumntype{L}{>{\centering\arraybackslash}m{2.3cm}}
 \numberwithin{equation}{section}
 
 %=======================================================
@@ -60,6 +63,8 @@ pdftoolbar=false, % Ẩn đi tool bar trong PDF viewer
 pdfmenubar=false % Ẩn đi menu bar trong PDF viewer
 ]{hyperref}
 
+\usepackage[all]{hypcap} % Cho phép tham chiếu chính xác đến hình ảnh và bảng biểu
+\counterwithin{figure}{chapter} % Đánh số hình ảnh kèm theo chapter. Ví dụ: Hình 1.1, 1.2,..
 
 % Phụ lục 
 \usepackage[toc,page]{appendix} % Thêm phụ lục
@@ -68,8 +73,8 @@ pdfmenubar=false % Ẩn đi menu bar trong PDF viewer
 \renewcommand{\appendixpagename}{Phụ lục}
 
 % Tài liệu tham khảo
-\usepackage{biblatex}
-\addbibresource{bibliography/report-bib.bib}
+\usepackage[sorting=none,maxnames=99,giveninits=true,doi=true,url=true]{biblatex}
+\addbibresource{report-bib.bib}
 \DefineBibliographyStrings{english}{%
 bibliography = {Tài liệu tham khảo},
 references = {Tài liệu tham khảo},
@@ -87,13 +92,26 @@ references = {Tài liệu tham khảo},
 % Đầu trang và chân trang
 \pagestyle{fancy}
 \fancyhf{}
-\lhead{\rightmark}
-\rfoot{Kiến trúc máy tính}
-\lfoot{Nhóm 5}
-\rhead{Trang \thepage}
+\lhead{\footnotesize\nouppercase\leftmark} % Bên trái header: tên chapter
+\cfoot{\footnotesize\thepage} % Giữa footer: số trang
 \renewcommand{\headrulewidth}{2pt}
 \renewcommand{\footrulewidth}{2pt}
 
+
+% Định dạng section/subsection
+\newcommand{\titlesize}{\fontsize{18pt}{23pt}\selectfont}
+\newcommand{\subtitlesize}{\fontsize{16pt}{21pt}\selectfont}
+\titleclass{\part}{top}
+\titleformat{\part}[display]
+  {\normalfont\huge\bfseries}{\centering}{20pt}{\Huge\centering}
+\titlespacing{\part}{0pt}{2em}{1em}
+\titlespacing{\section}{0pt}{\parskip}{0.5\parskip}
+\titlespacing{\subsection}{0pt}{\parskip}{0.5\parskip}
+\titlespacing{\subsubsection}{0pt}{\parskip}{0.5\parskip}
+
+
+\setcounter{secnumdepth}{3} % Cho phép subsubsection trong report
+\setcounter{tocdepth}{3} % Chèn subsubsection vào bảng mục lục
 
 % Hình vẽ
 \graphicspath{{./rpt-img/}}
@@ -115,12 +133,15 @@ references = {Tài liệu tham khảo},
 \usetikzlibrary{shapes}
 
 % Các dịnh nghĩa, định lý, hệ quả
-\newtheorem{theorem}{Định lý}[subsection]
+\newtheorem{theorem}{Định lý}[chapter]
 \newtheorem{result}[theorem]{Kết quả}
 \newtheorem{corollary}{Hệ quả}[theorem]
 \newtheorem{lemma}[theorem]{Bổ đề}
+\newtheorem{num_algo}[theorem]{Thuật toán}
 
 \renewcommand\qedsymbol{$\blacksquare$} % Cài đặt QED
+
+
 
 %=======================================================
 \begin{document}
@@ -131,31 +152,31 @@ references = {Tài liệu tham khảo},
     \restoregeometry
 
     \pagestyle{empty}
+    \input{rpt-chapters/acks}
     \newpage
-    \tableofcontents
-    \addcontentsline{toc}{section}{\protect\numberline{}Mục lục}
+    \tableofcontents % Mục lục
+    \addcontentsline{toc}{chapter}{Mục lục}
     \newpage
-
+    \listoffigures % Danh sách các hình ảnh
+    \addcontentsline{toc}{chapter}{Danh sách các hình ảnh}
+    \newpage
+    \listoftables % Danh sách bảng biểu
+    \addcontentsline{toc}{chapter}{Danh sách bảng biểu}
+    \input{rpt-chapters/intro}
+    \newpage
     \pagestyle{fancy}
-    
+
     \input{rpt-chapters/chapter1}
     \input{rpt-chapters/chapter2}
     \input{rpt-chapters/chapter3}
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     \newpage
     \pagestyle{plain}
     \nocite{*} % Tùy chọn cho phép in tất cả danh mục tài liệu tham khảo, kể cả tài liệu không được tham chiếu
     \printbibliography
-    \addcontentsline{toc}{section}{\protect\numberline{}Danh mục tài liệu tham khảo}
+    \addcontentsline{toc}{chapter}{Danh mục tài liệu tham khảo}
+    
+    \input{rpt-chapters/appendix}
 
 \end{document}
 % Created by bu1th4nh
