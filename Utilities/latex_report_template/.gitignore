@@ -11,6 +11,8 @@
 *.toc
 *.vrb
 *.xml
+*.lof
+*.lot
 script.txt
 *.synctex*
 main-report-blx.bib

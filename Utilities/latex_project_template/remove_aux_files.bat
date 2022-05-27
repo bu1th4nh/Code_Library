@@ -11,6 +11,8 @@ del /s /q *.out
 del /s /q *.toc
 del /s /q *.vrb
 del /s /q *.xml
+del /s /q *.lof
+del /s /q *.lot
 del /s /q script.txt
 del /s /q *.synctex*
 del /s /q main-report-blx.bib

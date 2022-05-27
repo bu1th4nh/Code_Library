@@ -6,7 +6,7 @@
 % **                       |_.__/ \__,_|_|\__|_| |_|  |_| |_| |_|_| |_|                       **
 % \*==========================================================================================*/
 % 
-%   LaTeX Report Template v2.04 by bu1th4nh. Copyright (c) 2022 bu1th4nh. All right reserved
+%   LaTeX Report Template v2.06 by bu1th4nh. Copyright (c) 2022 bu1th4nh. All right reserved
 %   Author: @bu1th4nh (Bùi Tiến Thành)
 %   Date: 2022/05/05 15:47
 %   URL: https://github.com/bu1th4nh
@@ -52,9 +52,18 @@ unicode=true, % Sử dụng Unicode
 pdffitwindow=true, % Fit cho vừa cửa sổ
 pdfstartview={FitW}, % Zoom file PDF cho vừa khít với nội dung
 pdftoolbar=false, % Ẩn đi tool bar trong PDF viewer
-pdfmenubar=false % Ẩn đi menu bar trong PDF viewer
+pdfmenubar=false, % Ẩn đi menu bar trong PDF viewer
+breaklinks=true % Tránh tràn dòng với liên kết
 ]{hyperref}
 
+
+% Tránh tràn dòng với liên kết, 2.0
+\usepackage{url}
+\def\UrlBreaks{\do\/\do-}
+
+
+% Cài đặt số cột tối đa
+\setcounter{MaxMatrixCols}{200}
 
 % Phụ lục 
 \usepackage[toc,page]{appendix} % Thêm phụ lục
@@ -63,8 +72,8 @@ pdfmenubar=false % Ẩn đi menu bar trong PDF viewer
 \renewcommand{\appendixpagename}{Phụ lục}
 
 % Tài liệu tham khảo
-\usepackage{biblatex}
-\addbibresource{bibliography/report-bib.bib}
+\usepackage[block=ragged]{biblatex}
+\addbibresource{bibliography/biblio.bib}
 \DefineBibliographyStrings{english}{%
 bibliography = {Tài liệu tham khảo},
 references = {Tài liệu tham khảo},
