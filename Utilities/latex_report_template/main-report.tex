@@ -6,7 +6,7 @@
 % **                       |_.__/ \__,_|_|\__|_| |_|  |_| |_| |_|_| |_|                       **
 % \*==========================================================================================*/
 % 
-%   LaTeX Report Template v2.06 by bu1th4nh. Copyright (c) 2022 bu1th4nh. All right reserved
+%   LaTeX Report Template v2.07 by bu1th4nh. Copyright (c) 2022 bu1th4nh. All right reserved
 %   Author: @bu1th4nh (Bùi Tiến Thành)
 %   Date: 2022/05/05 15:47
 %   URL: https://github.com/bu1th4nh
@@ -58,6 +58,9 @@ breaklinks=true % Tránh tràn dòng với liên kết
 ]{hyperref}
 
 
+\usepackage[all]{hypcap} % Cho phép tham chiếu chính xác đến hình ảnh và bảng biểu
+\counterwithin{figure}{section} % Đánh số hình ảnh kèm theo section. Ví dụ: Hình 1.1, 1.2,..
+
 % Tránh tràn dòng với liên kết, 2.0
 \usepackage{url}
 \def\UrlBreaks{\do\/\do-}
@@ -93,8 +96,8 @@ references = {Tài liệu tham khảo},
 \pagestyle{fancy}
 \fancyhf{}
 \lhead{\rightmark}
-\rfoot{Kiến trúc máy tính}
-\lfoot{Nhóm 5}
+\rfoot{Môn học}
+\lfoot{Nhóm}
 \rhead{Trang \thepage}
 \renewcommand{\headrulewidth}{2pt}
 \renewcommand{\footrulewidth}{2pt}
